@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.kiana.sjt.myinfocollecter"
+        minSdkVersion 24
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+
+    implementation rootProject.ext.dependencies["gson"]
+
+    implementation rootProject.ext.dependencies["imagerloader"]
+    implementation rootProject.ext.dependencies["zxing"]
+
+    implementation rootProject.ext.dependencies["permissions"]
+    implementation rootProject.ext.dependencies["androidUtils"]
+    implementation rootProject.ext.dependencies["network"]
+    implementation rootProject.ext.dependencies["loadsir"]
+    implementation rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glidec"]
+
+}
