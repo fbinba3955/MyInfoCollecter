@@ -2,6 +2,7 @@ package com.kiana.sjt.myinfocollecter;
 
 import android.app.Application;
 
+import com.androidnetworking.AndroidNetworking;
 import com.blankj.utilcode.util.Utils;
 import com.kingja.loadsir.core.LoadSir;
 
@@ -16,5 +17,7 @@ public class MainApplication extends Application{
         super.onCreate();
         //初始化androidUtils
         Utils.init(this);
+        //初始化网络
+        AndroidNetworking.initialize(getApplicationContext());
     }
 }
