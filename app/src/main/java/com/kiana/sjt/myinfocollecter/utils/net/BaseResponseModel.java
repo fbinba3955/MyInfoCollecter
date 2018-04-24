@@ -1,5 +1,7 @@
 package com.kiana.sjt.myinfocollecter.utils.net;
 
+import android.databinding.BaseObservable;
+
 import java.io.Serializable;
 
 /**
@@ -7,7 +9,7 @@ import java.io.Serializable;
  * Created by taodi on 2018/4/23.
  */
 
-public class BaseResponseModel implements Serializable{
+public class BaseResponseModel extends BaseObservable implements Serializable{
 
     private String result;
 

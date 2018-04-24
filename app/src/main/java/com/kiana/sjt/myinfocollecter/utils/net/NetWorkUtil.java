@@ -6,8 +6,12 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.blankj.utilcode.util.LogUtils;
 import com.google.gson.Gson;
+import com.kiana.sjt.myinfocollecter.Constants;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
+import com.kiana.sjt.myinfocollecter.utils.PropertiesUtil;
 
 import org.json.JSONArray;
 
@@ -17,6 +21,8 @@ import org.json.JSONArray;
  */
 
 public class NetWorkUtil {
+
+    public static final String TAG_NET = "Net";
 
     /**
      * 普通的post请求
@@ -28,29 +34,31 @@ public class NetWorkUtil {
     /**
      * 普通的get请求
      * @param context
-     * @param cmd
+     * @param url
      * @param netCallBack
      * @param <T>
      */
-    public static <T> void deGetNullDate(Context context,
-                                         final String cmd,
+    public static <T> void doGetNullDate(Context context,
+                                         final String url,
                                          final NetCallBack<T> netCallBack) {
-            AndroidNetworking.get("https://fierce-cove-29863.herokuapp.com/getAllUsers/{pageNumber}")
+            LogUtils.json(url);
+            AndroidNetworking.get(url)
                 .setPriority(Priority.LOW)
                 .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        // do anything with response
-                        String resp = response.toString();
-                        T respBean = JsonUtil.fromJsonStringToCollection(resp, netCallBack.getType());
-                        netCallBack.onSuccess(respBean);
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        netCallBack.onError(error);
-                    }
-                });
+                    .getAsString(new StringRequestListener() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            LogUtils.json(TAG_NET, response);
+                            T respBean = JsonUtil.fromJsonStringToCollection(response, netCallBack.getType());
+                            netCallBack.onSuccess(respBean);
+                        }
+
+                        @Override
+                        public void onError(ANError anError) {
+                            netCallBack.onError(anError);
+                        }
+
+                    });
     }
 }

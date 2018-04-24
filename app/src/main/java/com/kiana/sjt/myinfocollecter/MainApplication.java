@@ -4,7 +4,8 @@ import android.app.Application;
 
 import com.androidnetworking.AndroidNetworking;
 import com.blankj.utilcode.util.Utils;
-import com.kingja.loadsir.core.LoadSir;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 /**
  * Created by taodi on 2018/4/23.
@@ -19,5 +20,7 @@ public class MainApplication extends Application{
         Utils.init(this);
         //初始化网络
         AndroidNetworking.initialize(getApplicationContext());
+        //初始化imageloader
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
     }
 }

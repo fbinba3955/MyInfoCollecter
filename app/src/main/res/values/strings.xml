@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">MyInfoCollecter</string>
+    <string name="app_name">棱镜</string>
+
+    <string name="welcome_title">棱镜收集系统</string>
 </resources>

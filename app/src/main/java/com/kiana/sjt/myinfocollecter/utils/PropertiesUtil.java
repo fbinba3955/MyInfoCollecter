@@ -38,7 +38,7 @@ public class PropertiesUtil {
      * @param key
      * @return
      */
-    public String getAppConfigValue(Context c, String key) {
+    public static String getAppConfigValue(Context c, String key) {
         Properties proper = getProperties(c);
         String value = proper.getProperty(key);
         return value;

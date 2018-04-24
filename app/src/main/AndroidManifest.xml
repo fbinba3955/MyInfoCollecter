@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    // 获取手机信息权限
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    //摄像头
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:allowBackup="true"
         android:name=".MainApplication"
@@ -15,7 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".home.view.WelcomeAcivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
