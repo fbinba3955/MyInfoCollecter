@@ -6,4 +6,6 @@
     <dimen name="new_text_size_medium">88sp</dimen>
     <dimen name="new_text_size_large">21sp</dimen>
 
+    <dimen name="card_padding">60dp</dimen>
+
 </resources>

@@ -1,12 +1,17 @@
 package com.kiana.sjt.myinfocollecter.home.vmodel;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.androidnetworking.error.ANError;
+import com.kiana.sjt.myinfocollecter.Constants;
 import com.kiana.sjt.myinfocollecter.ImageContants;
+import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.home.model.WelcomeBgModel;
 import com.kiana.sjt.myinfocollecter.databinding.ActivityWelcomeBinding;
+import com.kiana.sjt.myinfocollecter.home.view.HomeActivity;
+import com.kiana.sjt.myinfocollecter.medicine.view.MedicineHomeActivity;
 import com.kiana.sjt.myinfocollecter.utils.PropertiesUtil;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
@@ -22,7 +27,11 @@ public class WelcomeVModel extends MainVModel{
 
     private ActivityWelcomeBinding binding;
 
+    Context context;
+
     public WelcomeVModel(Context context, ActivityWelcomeBinding binding){
+
+        this.context = context;
 
         this.binding = binding;
 
@@ -50,9 +59,35 @@ public class WelcomeVModel extends MainVModel{
 
     //装载数据刷新页面
     private void initData(WelcomeBgModel welcomeBgModel) {
+        if (Constants.SUCCESS_ID.equals(welcomeBgModel.getResultCode())) {
+            this.welcomeBgModel = welcomeBgModel;
+            binding.setWelcomebg(welcomeBgModel);
+            new Thread(new WaitForAMoment()).start();
+        }
+        else {
+            ((MainActivity)context).finish();
+        }
+    }
 
-        this.welcomeBgModel = welcomeBgModel;
+    //跳转到首页
+    private void jumpToHome(Context context) {
+        if (context instanceof MainActivity) {
+            Intent intent = new Intent(context, MedicineHomeActivity.class);
+            context.startActivity(intent);
+            ((MainActivity) context).finish();
+        }
+    }
 
-        binding.setWelcomebg(welcomeBgModel);
+    public class WaitForAMoment implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(3000);
+                jumpToHome(context);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

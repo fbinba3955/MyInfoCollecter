@@ -26,4 +26,6 @@ public class Constants {
     public static final String GET_IMAGE = "getimage";
 
     public static final String ID = "id";
+
+    public static final String SUCCESS_ID = "0";
 }

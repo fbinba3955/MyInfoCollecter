@@ -11,16 +11,16 @@ import java.io.Serializable;
 
 public class BaseResponseModel extends BaseObservable implements Serializable{
 
-    private String result;
+    private String resultCode;
 
     private String resultMsg;
 
-    public String getResult() {
-        return result;
+    public String getResultCode() {
+        return resultCode;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
     }
 
     public String getResultMsg() {

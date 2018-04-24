@@ -12,7 +12,11 @@ public class MainVModel {
      * @return
      */
     public String makeMedicineUrl(String cmd) {
-        return Constants.serverUrl + Constants.MEDICINE + Constants.divide + cmd + Constants.php;
+        return Constants.serverUrl
+                + Constants.MEDICINE
+                + Constants.divide
+                + cmd
+                + Constants.php;
     }
 
     /**

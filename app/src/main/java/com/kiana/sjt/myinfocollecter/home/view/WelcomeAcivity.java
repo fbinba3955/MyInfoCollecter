@@ -2,17 +2,15 @@ package com.kiana.sjt.myinfocollecter.home.view;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.constant.PermissionConstants;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.kiana.sjt.myinfocollecter.Constants;
-import com.kiana.sjt.myinfocollecter.home.vmodel.WelcomeVModel;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.R;
 import com.kiana.sjt.myinfocollecter.databinding.ActivityWelcomeBinding;
+import com.kiana.sjt.myinfocollecter.home.vmodel.WelcomeVModel;
 import com.kiana.sjt.myinfocollecter.utils.PropertiesUtil;
 
 import java.util.List;
@@ -30,6 +28,14 @@ public class WelcomeAcivity extends MainActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_welcome);
+        setNoTitle();
+        requestPermissions();
+    }
+
+    /**
+     * 获取权限
+     */
+    private void requestPermissions() {
         PermissionUtils.permission(PermissionConstants.STORAGE, PermissionConstants.PHONE, PermissionConstants.CAMERA)
                 .rationale(new PermissionUtils.OnRationaleListener() {
                     @Override
@@ -41,7 +47,6 @@ public class WelcomeAcivity extends MainActivity{
                 }).callback(new PermissionUtils.FullCallback() {
             @Override
             public void onGranted(List<String> permissionsGranted) {
-                LogUtils.dTag("permission", permissionsGranted.size());
                 initConstants();
                 new WelcomeVModel(WelcomeAcivity.this, binding);
             }
