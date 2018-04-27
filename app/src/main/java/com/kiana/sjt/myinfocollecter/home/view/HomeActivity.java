@@ -1,12 +1,11 @@
 package com.kiana.sjt.myinfocollecter.home.view;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.kiana.sjt.myinfocollecter.BuildConfig;
 import com.kiana.sjt.myinfocollecter.Constants;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.R;
@@ -35,6 +33,7 @@ public class HomeActivity extends MainActivity {
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
 
         final Toolbar toolbar = mViewPager.getToolbar();
+        toolbar.setTitleTextColor(getColor(R.color.white));
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
@@ -44,7 +43,8 @@ public class HomeActivity extends MainActivity {
             @Override
             public Fragment getItem(int position) {
                 switch (position % 4) {
-                    //case 0:
+                    case 0:
+                        return InfoCollecterFragment.newInstance();
                     //    return RecyclerViewFragment.newInstance();
                     //case 1:
                     //    return RecyclerViewFragment.newInstance();

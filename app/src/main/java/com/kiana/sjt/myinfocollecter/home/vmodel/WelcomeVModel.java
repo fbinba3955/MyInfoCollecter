@@ -8,12 +8,9 @@ import com.kiana.sjt.myinfocollecter.Constants;
 import com.kiana.sjt.myinfocollecter.ImageContants;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.MainVModel;
-import com.kiana.sjt.myinfocollecter.home.model.WelcomeBgModel;
 import com.kiana.sjt.myinfocollecter.databinding.ActivityWelcomeBinding;
+import com.kiana.sjt.myinfocollecter.home.model.WelcomeBgModel;
 import com.kiana.sjt.myinfocollecter.home.view.HomeActivity;
-import com.kiana.sjt.myinfocollecter.learn.view.LearnHomeActivity;
-import com.kiana.sjt.myinfocollecter.medicine.view.MedicineHomeActivity;
-import com.kiana.sjt.myinfocollecter.utils.PropertiesUtil;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
 

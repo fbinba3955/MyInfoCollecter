@@ -6,6 +6,12 @@
     <string name="loading_title">请稍等</string>
     <string name="laoding_detail">正在加载数据</string>
 
+    <string name="medicine">医药</string>
+    <string name="medicine_detail">整理一些医药方面的信息</string>
+
+    <string name="learn">学习</string>
+    <string name="learn_detail">与学习相关的内容，提高自己</string>
+
     <string name="njszrl">南京市中医院</string>
     <string name="njszrl_des">这是关于南京市中医院的招聘信息，包含应届、往届的最新招聘信息。</string>
     <string name="look">查看</string>

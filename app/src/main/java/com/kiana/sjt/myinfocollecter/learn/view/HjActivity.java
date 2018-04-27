@@ -13,7 +13,6 @@ import com.kiana.sjt.myinfocollecter.R;
 import com.kiana.sjt.myinfocollecter.learn.model.HjJpModel;
 import com.kiana.sjt.myinfocollecter.learn.vmodel.HjVModel;
 import com.kiana.sjt.myinfocollecter.learn.vmodel.HjViewRefreshListener;
-import com.kiana.sjt.myinfocollecter.medicine.view.NjszNewsActivity;
 import com.kiana.sjt.myinfocollecter.utils.webview.ContentWebView;
 
 import java.util.List;

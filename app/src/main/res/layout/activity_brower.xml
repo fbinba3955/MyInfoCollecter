@@ -5,15 +5,7 @@
     android:id="@+id/container"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/activity_main_toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
-    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/layout_toolbar"></include>
 
     <im.delight.android.webview.AdvancedWebView
         android:id="@+id/webview"

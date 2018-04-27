@@ -14,13 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_main_toolbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:minHeight="?attr/actionBarSize"
-            android:background="@color/transparent">
-        </android.support.v7.widget.Toolbar>
+        <include layout="@layout/layout_toolbar"></include>
 
         <ImageView
             android:id="@+id/iv_bg"

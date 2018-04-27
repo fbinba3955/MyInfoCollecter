@@ -36,8 +36,8 @@ public class MedicineHomeActivity extends MainActivity{
     private void initView() {
         setTranslateToolbar();
         setToolbarTitle("医药信息");
-        setBackNav();
         initToolbar();
+        setBackNav();
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mCardAdapter = new CardPagerAdapter();
         mCardAdapter.addCardItem(new CardItem(R.string.njszrl, R.string.njszrl_des, R.string.look, listener));

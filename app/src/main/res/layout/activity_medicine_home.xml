@@ -5,15 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/activity_main_toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/transparent">
-    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/layout_toolbar"></include>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
