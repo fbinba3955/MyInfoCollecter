@@ -1,6 +1,7 @@
 package com.kiana.sjt.myinfocollecter;
 
 /**
+ * ViewModel基类
  * Created by taodi on 2018/4/24.
  */
 
@@ -34,5 +35,18 @@ public class MainVModel {
                 + Constants.ID
                 + "="
                 + cmd;
+    }
+
+    /**
+     * 学习
+     * @param cmd
+     * @return
+     */
+    public String makeLearnUrl(String cmd) {
+        return Constants.serverUrl
+                + Constants.LEARN
+                + Constants.divide
+                + cmd
+                + Constants.php;
     }
 }

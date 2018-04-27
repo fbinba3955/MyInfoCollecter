@@ -18,9 +18,29 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     dataBinding {
         enabled = true
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name.equals('release')) {
+                outputFileName = getProductName() +
+                        "_v${defaultConfig.versionName}_code${defaultConfig.versionCode}_${releaseTime()}" +
+                        '.apk'
+            }
+        }
+    }
+}
+
+//获取产品的名字
+def getProductName() {
+    return "info_collecter"
+}
+//获取当前系统的时间
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd-HH-mm-ss", TimeZone.getTimeZone("GMT+08"));
 }
 
 dependencies {
@@ -37,10 +57,18 @@ dependencies {
     implementation rootProject.ext.dependencies["androidUtils"]
     implementation rootProject.ext.dependencies["network"]
     implementation rootProject.ext.dependencies["pullrefresh"]
-    implementation(rootProject.ext.dependencies["glide"]) {
+
+    implementation rootProject.ext.dependencies["AdvancedWebView"]
+
+    implementation rootProject.ext.dependencies["materialDialog"]
+
+    implementation 'com.github.florent37:materialviewpager:1.2.3'
+    //dependencies
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'com.jpardogo.materialtabstrip:library:1.1.0'
+    implementation ('com.github.bumptech.glide:glide:4.0.0') {
         transitive = false
     }
-    annotationProcessor rootProject.ext.dependencies["glidec"]
 
     implementation 'com.android.support:multidex:1.0.1'
 

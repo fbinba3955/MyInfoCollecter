@@ -3,11 +3,18 @@
 
     <string name="welcome_title">棱镜收集系统</string>
 
+    <string name="loading_title">请稍等</string>
+    <string name="laoding_detail">正在加载数据</string>
+
     <string name="njszrl">南京市中医院</string>
     <string name="njszrl_des">这是关于南京市中医院的招聘信息，包含应届、往届的最新招聘信息。</string>
     <string name="look">查看</string>
+
+    <string name="hj">沪江日语热门</string>
+    <string name="hj_detail">沪江日语的首页热门推荐</string>
+
     <string name="cardother">待添加</string>
     <string name="cardother_des">……</string>
 
-    <string name="text_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam eget ligula eu lectus lobortis condimentum.</string>
+    <string name="title_hj">沪江日语推荐</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.kiana.sjt.myinfocollecter.medicine.view;
+package com.kiana.sjt.myinfocollecter.learn.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,73 +10,72 @@ import android.view.View;
 import com.baoyz.widget.PullRefreshLayout;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.R;
-import com.kiana.sjt.myinfocollecter.medicine.model.NjszrlModel;
-import com.kiana.sjt.myinfocollecter.medicine.vmodel.NjszNewsVModel;
+import com.kiana.sjt.myinfocollecter.learn.model.HjJpModel;
+import com.kiana.sjt.myinfocollecter.learn.vmodel.HjVModel;
+import com.kiana.sjt.myinfocollecter.learn.vmodel.HjViewRefreshListener;
+import com.kiana.sjt.myinfocollecter.medicine.view.NjszNewsActivity;
 import com.kiana.sjt.myinfocollecter.utils.webview.ContentWebView;
 
 import java.util.List;
 
 /**
- * Created by taodi on 2018/4/24.
+ * Created by taodi on 2018/4/27.
  */
 
-public class NjszNewsActivity extends MainActivity {
+public class HjActivity extends MainActivity implements HjViewRefreshListener{
 
     public PullRefreshLayout pullRefreshLayout;
 
     public RecyclerView recyclerView;
 
-    public NjszNewsAdapter adapter;
+    HjJpAdapter adapter;
 
-    public NjszNewsVModel vModel;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
-        setDefaultToolbar("南京市中");
+        setContentView(R.layout.activity_hj);
+        setDefaultToolbar(R.string.title_hj);
+        init();
         initView();
         initAfter();
     }
 
-    public void initView() {
+    private void init() {}
+
+    private void initView() {
         pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pullview);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
-    public void initAfter() {
-        vModel = new NjszNewsVModel(this);
+    private void initAfter() {
+        final HjVModel vModel = new HjVModel(this);
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                vModel.questData();
+                vModel.requestData();
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
-    /**
-     * 设置内容
-     * @param dataList
-     */
-    public void setRecyclerViewData(final List<NjszrlModel.Newslist> dataList) {
-        adapter = new NjszNewsAdapter(this, dataList);
+    @Override
+    public void onRefreshListLinstener(final List<HjJpModel.Newslist> dataList) {
+        adapter = new HjJpAdapter(HjActivity.this, dataList);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new NjszNewsAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new HjJpAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(NjszNewsActivity.this, ContentWebView.class);
+                Intent intent = new Intent(HjActivity.this, ContentWebView.class);
                 intent.putExtra(ContentWebView.PARAM_URL, dataList.get(position).getUrl());
                 intent.putExtra(ContentWebView.PARAM_TITLE, dataList.get(position).getTitle());
                 startActivity(intent);
             }
         });
+
         pullRefreshLayout.setRefreshing(false);
     }
+
 }

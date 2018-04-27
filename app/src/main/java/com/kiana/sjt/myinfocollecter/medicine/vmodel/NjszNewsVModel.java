@@ -24,6 +24,7 @@ public class NjszNewsVModel extends MainVModel{
     public NjszNewsVModel(Context context){
         if (context instanceof NjszNewsActivity) {
             this.activity = (NjszNewsActivity) context;
+            activity.showLoadingDialog();
             questData();
         }
     }
@@ -35,11 +36,13 @@ public class NjszNewsVModel extends MainVModel{
 
                     @Override
                     public void onError(ANError error) {
-
+                        activity.hideLoadingDialog();
+                        activity.tip(error.getErrorDetail());
                     }
 
                     @Override
                     public void onSuccess(NjszrlModel bean) {
+                        activity.hideLoadingDialog();
                         initData(bean);
                     }
                 });

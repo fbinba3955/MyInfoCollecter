@@ -6,5 +6,13 @@ package com.kiana.sjt.myinfocollecter;
 
 public class CmdConstants {
 
+    /**
+     * 南京市中医招聘
+     */
     public static final String NJSZRL = "njszrl";
+
+    /**
+     * 沪江日语推荐
+     */
+    public static final String HJJP = "hjjp";
 }

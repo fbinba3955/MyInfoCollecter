@@ -1,4 +1,4 @@
-package com.kiana.sjt.myinfocollecter.medicine.view;
+package com.kiana.sjt.myinfocollecter.learn.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,39 +7,40 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kiana.sjt.myinfocollecter.R;
+import com.kiana.sjt.myinfocollecter.learn.model.HjJpModel;
 import com.kiana.sjt.myinfocollecter.medicine.model.NjszrlModel;
 
 import java.util.List;
 
 /**
- * 南京市中adapter
+ * 沪江日语编辑推荐adapter
  * Created by taodi on 2018/4/24.
  */
 
-public class NjszNewsAdapter extends RecyclerView.Adapter<MyHolder> {
+public class HjJpAdapter extends RecyclerView.Adapter<HjHolder> {
 
-    private List<NjszrlModel.Newslist> dataList;
+    private List<HjJpModel.Newslist> dataList;
 
     private Context context;
 
     private OnItemClickListener onItemClickListener;
 
-    public NjszNewsAdapter(Context context, List<NjszrlModel.Newslist> dataList) {
+    public HjJpAdapter(Context context, List<HjJpModel.Newslist> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
 
     @Override
-    public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item_njsz, parent, false);
-        MyHolder holder = new MyHolder(view);
+    public HjHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_hjjp, parent, false);
+        HjHolder holder = new HjHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final MyHolder holder, int position) {
+    public void onBindViewHolder(final HjHolder holder, int position) {
+        holder.typeTv.setText(dataList.get(position).getType());
         holder.titleTv.setText(dataList.get(position).getTitle());
-        holder.dateTv.setText(dataList.get(position).getDate());
         if (null != onItemClickListener) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
 

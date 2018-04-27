@@ -19,7 +19,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme1">
         <activity android:name=".home.view.WelcomeAcivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +31,9 @@
         <activity android:name=".home.view.HomeActivity"></activity>
         <activity android:name=".medicine.view.MedicineHomeActivity"></activity>
         <activity android:name=".medicine.view.NjszNewsActivity"></activity>
+        <activity android:name=".utils.webview.ContentWebView"></activity>
+        <activity android:name=".learn.view.HjActivity"></activity>
+        <activity android:name=".learn.view.LearnHomeActivity"></activity>
     </application>
 
 </manifest>

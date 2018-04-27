@@ -11,6 +11,8 @@ public class Constants {
 
     public static String serverUrl = "";
 
+    public static String serverImgUrl = "";
+
     public static final String php = ".php";
 
     public static final String divide = "/";
@@ -20,6 +22,8 @@ public class Constants {
     public static final String deviceId = "";
 
     public static final String MEDICINE = "medicine";
+
+    public static final String LEARN = "learn";
 
     public static final String IMAGES = "images";
 

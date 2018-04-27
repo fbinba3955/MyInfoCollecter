@@ -11,6 +11,7 @@ import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.home.model.WelcomeBgModel;
 import com.kiana.sjt.myinfocollecter.databinding.ActivityWelcomeBinding;
 import com.kiana.sjt.myinfocollecter.home.view.HomeActivity;
+import com.kiana.sjt.myinfocollecter.learn.view.LearnHomeActivity;
 import com.kiana.sjt.myinfocollecter.medicine.view.MedicineHomeActivity;
 import com.kiana.sjt.myinfocollecter.utils.PropertiesUtil;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
@@ -72,7 +73,7 @@ public class WelcomeVModel extends MainVModel{
     //跳转到首页
     private void jumpToHome(Context context) {
         if (context instanceof MainActivity) {
-            Intent intent = new Intent(context, MedicineHomeActivity.class);
+            Intent intent = new Intent(context, HomeActivity.class);
             context.startActivity(intent);
             ((MainActivity) context).finish();
         }
