@@ -10,4 +10,8 @@ public interface CommonActivityListener {
     public void onTip(String content);
 
     public void onFinish();
+
+    public void onShowLoadingDialgo();
+
+    public void onHideLoadingDialog();
 }

@@ -131,4 +131,14 @@ public class MainActivity extends AppCompatActivity implements CommonActivityLis
     public void onFinish() {
         finish();
     }
+
+    @Override
+    public void onShowLoadingDialgo() {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void onHideLoadingDialog() {
+        hideLoadingDialog();
+    }
 }

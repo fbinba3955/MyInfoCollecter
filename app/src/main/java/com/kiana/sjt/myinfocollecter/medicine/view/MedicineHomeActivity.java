@@ -54,7 +54,7 @@ public class MedicineHomeActivity extends MainActivity{
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MedicineHomeActivity.this, HjActivity.class);
+            Intent intent = new Intent(MedicineHomeActivity.this, NjszNewsActivity.class);
             startActivity(intent);
         }
     };

@@ -33,9 +33,9 @@ public class DataBindingUtil {
      */
     public static DisplayImageOptions getImageLoaderOptionForWelcome() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_welcome_bg)
-                .showImageForEmptyUri(R.drawable.img_welcome_bg)
-                .showImageOnFail(R.drawable.img_welcome_bg)
+                .showImageOnLoading(R.drawable.img_loading_default)
+                .showImageForEmptyUri(R.drawable.img_loading_default)
+                .showImageOnFail(R.drawable.img_loading_default)
                 .cacheOnDisk(true)
                 .cacheInMemory(false)
                 .build();

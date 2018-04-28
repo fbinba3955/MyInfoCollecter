@@ -20,7 +20,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme1">
-        <activity android:name=".home.view.WelcomeAcivity">
+        <activity android:name=".home.view.WelcomeAcivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,12 +29,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.view.HomeActivity"></activity>
-        <activity android:name=".medicine.view.MedicineHomeActivity"></activity>
-        <activity android:name=".medicine.view.NjszNewsActivity"></activity>
-        <activity android:name=".utils.webview.ContentWebView"></activity>
-        <activity android:name=".learn.view.HjActivity"></activity>
-        <activity android:name=".learn.view.LearnHomeActivity"></activity>
+        <activity android:name=".home.view.HomeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".medicine.view.MedicineHomeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".medicine.view.NjszNewsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".utils.webview.ContentWebView"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".learn.view.HjActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".learn.view.LearnHomeActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

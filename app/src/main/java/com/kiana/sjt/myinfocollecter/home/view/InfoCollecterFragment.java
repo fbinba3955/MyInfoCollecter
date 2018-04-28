@@ -16,7 +16,7 @@ import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.kiana.sjt.myinfocollecter.Constants;
 import com.kiana.sjt.myinfocollecter.MainFragment;
 import com.kiana.sjt.myinfocollecter.R;
-import com.kiana.sjt.myinfocollecter.learn.view.HjActivity;
+import com.kiana.sjt.myinfocollecter.learn.view.LearnHomeActivity;
 import com.kiana.sjt.myinfocollecter.medicine.view.MedicineHomeActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -73,8 +73,7 @@ public class InfoCollecterFragment extends MainFragment{
                 startActivity(intent);
             }
             else if (view.getId() == R.id.card_learn) {
-                // TODO: 2018/4/27 转入学习主页
-                Intent intent = new Intent(getActivity(), HjActivity.class);
+                Intent intent = new Intent(getActivity(), LearnHomeActivity.class);
                 startActivity(intent);
             }
         }

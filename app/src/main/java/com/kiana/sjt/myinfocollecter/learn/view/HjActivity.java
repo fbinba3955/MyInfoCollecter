@@ -73,7 +73,7 @@ public class HjActivity extends MainActivity implements HjViewRefreshListener{
                 startActivity(intent);
             }
         });
-
+        hideLoadingDialog();
         pullRefreshLayout.setRefreshing(false);
     }
 

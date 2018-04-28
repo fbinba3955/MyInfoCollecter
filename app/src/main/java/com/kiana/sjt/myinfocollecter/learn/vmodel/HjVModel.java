@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.androidnetworking.error.ANError;
 import com.kiana.sjt.myinfocollecter.CmdConstants;
+import com.kiana.sjt.myinfocollecter.CommonActivityListener;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.learn.model.HjJpModel;
@@ -19,13 +20,17 @@ public class HjVModel extends MainVModel {
 
     HjViewRefreshListener listener;
 
+    CommonActivityListener commonActivityListener;
+
     Context context;
 
     public HjVModel(Context context) {
         this.context = context;
         if (context instanceof HjActivity) {
             this.listener = (HjActivity)context;
+            this.commonActivityListener = (HjActivity) context;
         }
+        commonActivityListener.onShowLoadingDialgo();
         requestData();
     }
 

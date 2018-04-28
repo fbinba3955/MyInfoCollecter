@@ -70,6 +70,8 @@ dependencies {
         transitive = false
     }
 
+    compile 'com.github.bifan-wei:HwTxtReader:V1.3.2'
+
     implementation 'com.android.support:multidex:1.0.1'
 
 }
