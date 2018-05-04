@@ -21,4 +21,9 @@ public class CmdConstants {
      * 日语学习网页整理
      */
     public static final String JPWEB = "jpweb";
+
+    /**
+     * 自娱自乐网页整理
+     */
+    public static final String MY = "my";
 }

@@ -18,6 +18,7 @@ import com.kiana.sjt.myinfocollecter.MainFragment;
 import com.kiana.sjt.myinfocollecter.R;
 import com.kiana.sjt.myinfocollecter.learn.view.LearnHomeActivity;
 import com.kiana.sjt.myinfocollecter.medicine.view.MedicineHomeActivity;
+import com.kiana.sjt.myinfocollecter.my.view.MyHomeActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -38,6 +39,10 @@ public class InfoCollecterFragment extends MainFragment{
 
     CardView cardView_learn;
 
+    ImageView img_my;
+
+    CardView cardView_my;
+
     public static InfoCollecterFragment newInstance() {
         return new InfoCollecterFragment();
     }
@@ -54,6 +59,9 @@ public class InfoCollecterFragment extends MainFragment{
         img_learn = (ImageView) v.findViewById(R.id.img_learn);
         cardView_learn = (CardView) v.findViewById(R.id.card_learn);
         cardView_learn.setOnClickListener(onClickListener);
+        img_my = (ImageView) v.findViewById(R.id.img_my);
+        cardView_my = (CardView) v.findViewById(R.id.card_my);
+        cardView_my.setOnClickListener(onClickListener);
         return v;
     }
 
@@ -63,6 +71,7 @@ public class InfoCollecterFragment extends MainFragment{
         MaterialViewPagerHelper.registerScrollView(getActivity(), scrollView);
         ImageLoader.getInstance().displayImage(Constants.serverImgUrl + "img_medicine_enter.jpg", img_medicine, getImageLoaderOption());
         ImageLoader.getInstance().displayImage(Constants.serverImgUrl + "img_learn_enter.jpg", img_learn, getImageLoaderOption());
+        ImageLoader.getInstance().displayImage(Constants.serverImgUrl + "img_my_enter.jpg", img_my, getImageLoaderOption());
     }
 
     View.OnClickListener onClickListener  = new View.OnClickListener() {
@@ -74,6 +83,10 @@ public class InfoCollecterFragment extends MainFragment{
             }
             else if (view.getId() == R.id.card_learn) {
                 Intent intent = new Intent(getActivity(), LearnHomeActivity.class);
+                startActivity(intent);
+            }
+            else if (view.getId() == R.id.card_my) {
+                Intent intent = new Intent(getActivity(), MyHomeActivity.class);
                 startActivity(intent);
             }
         }

@@ -41,6 +41,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".learn.view.LearnHomeActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".my.view.MyHomeActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

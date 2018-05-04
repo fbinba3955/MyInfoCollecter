@@ -49,4 +49,17 @@ public class MainVModel {
                 + cmd
                 + Constants.php;
     }
+
+    /**
+     * 自娱自乐
+     * @param cmd
+     * @return
+     */
+    public String makeMyUrl(String cmd) {
+        return Constants.serverUrl
+                + Constants.MY
+                + Constants.divide
+                + cmd
+                + Constants.php;
+    }
 }

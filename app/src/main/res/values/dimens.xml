@@ -8,4 +8,6 @@
 
     <dimen name="card_padding">60dp</dimen>
 
+    <dimen name="default_padding">12dp</dimen>
+
 </resources>

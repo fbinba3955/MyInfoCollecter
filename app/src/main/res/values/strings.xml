@@ -12,6 +12,9 @@
     <string name="learn">学习</string>
     <string name="learn_detail">与学习相关的内容，提高自己</string>
 
+    <string name="my">自娱自乐</string>
+    <string name="my_detail">个人感兴趣的一些东西</string>
+
     <string name="njszrl">南京市中医院</string>
     <string name="njszrl_des">这是关于南京市中医院的招聘信息，包含应届、往届的最新招聘信息。</string>
     <string name="look">查看</string>
