@@ -5,31 +5,49 @@ import android.view.View;
 
 public class CardItem {
 
-    private int mTextResource;
-    private int mTitleResource;
-    private int mButtonContent;
+    private String mTextResource;
+    private String mTitleResource;
+    private String mButtonContent;
     private View.OnClickListener onButtonClickListener;
 
-    public CardItem(int title, int text, int btnContent, View.OnClickListener listener) {
+    public CardItem(String title, String text, String btnContent, View.OnClickListener listener) {
         mTitleResource = title;
         mTextResource = text;
         mButtonContent = btnContent;
         onButtonClickListener = listener;
     }
 
-    public int getText() {
+    public CardItem() {}
+
+    public String getText() {
         return mTextResource;
     }
 
-    public int getTitle() {
+    public String getTitle() {
         return mTitleResource;
     }
 
-    public int getmButtonContent() {
+    public String getmButtonContent() {
         return mButtonContent;
     }
 
     public View.OnClickListener getOnButtonClickListener() {
         return onButtonClickListener;
+    }
+
+    public void setmTextResource(String mTextResource) {
+        this.mTextResource = mTextResource;
+    }
+
+    public void setmTitleResource(String mTitleResource) {
+        this.mTitleResource = mTitleResource;
+    }
+
+    public void setmButtonContent(String mButtonContent) {
+        this.mButtonContent = mButtonContent;
+    }
+
+    public void setOnButtonClickListener(View.OnClickListener onButtonClickListener) {
+        this.onButtonClickListener = onButtonClickListener;
     }
 }

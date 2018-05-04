@@ -15,4 +15,10 @@ public class CmdConstants {
      * 沪江日语推荐
      */
     public static final String HJJP = "hjjp";
+
+
+    /**
+     * 日语学习网页整理
+     */
+    public static final String JPWEB = "jpweb";
 }

@@ -40,10 +40,10 @@ public class MedicineHomeActivity extends MainActivity{
         setBackNav();
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mCardAdapter = new CardPagerAdapter();
-        mCardAdapter.addCardItem(new CardItem(R.string.njszrl, R.string.njszrl_des, R.string.look, listener));
-        mCardAdapter.addCardItem(new CardItem(R.string.cardother, R.string.cardother_des, R.string.look, listener));
-        mCardAdapter.addCardItem(new CardItem(R.string.cardother, R.string.cardother_des, R.string.look, listener));
-        mCardAdapter.addCardItem(new CardItem(R.string.cardother, R.string.cardother_des, R.string.look, listener));
+        mCardAdapter.addCardItem(new CardItem(getString(R.string.njszrl), getString(R.string.njszrl_des), getString(R.string.look), listener));
+        mCardAdapter.addCardItem(new CardItem(getString(R.string.cardother), getString(R.string.cardother_des), getString(R.string.look), listener));
+        mCardAdapter.addCardItem(new CardItem(getString(R.string.cardother), getString(R.string.cardother_des), getString(R.string.look), listener));
+        mCardAdapter.addCardItem(new CardItem(getString(R.string.cardother), getString(R.string.cardother_des), getString(R.string.look), listener));
         mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
         mCardShadowTransformer.enableScaling(true);
         mViewPager.setAdapter(mCardAdapter);

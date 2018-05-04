@@ -61,7 +61,7 @@ public class HjActivity extends MainActivity implements HjViewRefreshListener{
 
 
     @Override
-    public void onRefreshListLinstener(final List<HjJpModel.Newslist> dataList) {
+    public void onRefreshList(final List<HjJpModel.Newslist> dataList) {
         adapter = new HjJpAdapter(HjActivity.this, dataList);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new HjJpAdapter.OnItemClickListener() {

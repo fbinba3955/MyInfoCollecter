@@ -43,7 +43,7 @@ public class HjVModel extends MainVModel {
 
                     @Override
                     public void onSuccess(HjJpModel bean) {
-                        listener.onRefreshListLinstener(bean.getNewslist());
+                        listener.onRefreshList(bean.getNewslist());
                     }
 
                     @Override

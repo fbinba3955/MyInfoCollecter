@@ -22,8 +22,8 @@ public class RecyclerViewFragment extends Fragment {
 
     private static final boolean GRID_LAYOUT = false;
     private static final int ITEM_COUNT = 10;
-
     RecyclerView mRecyclerView;
+
 
     public static RecyclerViewFragment newInstance() {
         return new RecyclerViewFragment();

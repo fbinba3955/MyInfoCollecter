@@ -15,6 +15,6 @@ public interface HjViewRefreshListener {
      * 刷新页面列表
      * @param dataList
      */
-    public void onRefreshListLinstener(List<HjJpModel.Newslist> dataList);
+    public void onRefreshList(List<HjJpModel.Newslist> dataList);
 
 }
