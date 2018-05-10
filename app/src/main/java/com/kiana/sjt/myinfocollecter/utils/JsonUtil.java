@@ -61,4 +61,19 @@ public class JsonUtil {
         return null;
 
     }
+
+    /**
+     * From object to json string.
+     *
+     * @param object the object
+     * @return the string
+     */
+    public static String fromObjectToJsonString(Object object) {
+        String result = null;
+        if (object != null) {
+            result = getInstance().toJson(object);
+        }
+        return result;
+
+    }
 }

@@ -16,6 +16,11 @@ public class CmdConstants {
      */
     public static final String HJJP = "hjjp";
 
+    /**
+     * 登录
+     */
+    public static final String LOGIN = "login";
+
 
     /**
      * 日语学习网页整理

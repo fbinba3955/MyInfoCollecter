@@ -3,6 +3,11 @@
 
     <string name="welcome_title">棱镜</string>
 
+    <string name="user_login">用户登录</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+
     <string name="loading_title">请稍等</string>
     <string name="laoding_detail">正在加载数据</string>
 

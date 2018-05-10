@@ -2,7 +2,7 @@ ext {
     android_support_version = '23.2.0'
 
     android = [SdkVersion       : 26,
-               buildToolsVersion: "25",
+               buildToolsVersion: "26.0.2",
                applicationId    : "com.kiana.sjt.myinfocollecter",
                minSdkVersion    : 19,
                targetSdkVersion : 26,
@@ -51,5 +51,18 @@ ext {
 
             "materialDialog" : 'com.afollestad.material-dialogs:core:0.9.6.0',
 
+            "materialviewpager" : 'com.github.florent37:materialviewpager:1.2.3',
+
+            "kenburnsview" : 'com.flaviofaria:kenburnsview:1.0.7',
+
+            "materialtabstrip" : 'com.jpardogo.materialtabstrip:library:1.1.0',
+
+            "glide" : 'com.github.bumptech.glide:glide:4.0.0',
+
+            "pullloadmorerecyclerview" : 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2',
+
+            "multidex" : 'com.android.support:multidex:1.0.1',
+
+            "rxTools" : 'com.github.vondear:RxTools:v1.7.7.3',
     ]
 }

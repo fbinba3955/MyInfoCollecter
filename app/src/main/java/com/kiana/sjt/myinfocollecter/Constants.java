@@ -29,6 +29,8 @@ public class Constants {
 
     public static final String LEARN = "learn";
 
+    public static final String USER = "user";
+
     public static final String MY = "my";
 
     public static final String IMAGES = "images";

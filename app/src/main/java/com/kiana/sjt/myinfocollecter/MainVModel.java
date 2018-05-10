@@ -38,6 +38,19 @@ public class MainVModel {
     }
 
     /**
+     * 用户相关
+     * @param cmd
+     * @return
+     */
+    public String makeUserUrl(String cmd) {
+        return Constants.serverUrl
+                + Constants.USER
+                + Constants.divide
+                + cmd
+                + Constants.php;
+    }
+
+    /**
      * 学习
      * @param cmd
      * @return
