@@ -43,6 +43,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".my.view.MyHomeActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".home.view.LoginActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -33,7 +33,7 @@ public class LearnHomeVModel extends MainVModel {
     }
 
     public void requestData() {
-        NetWorkUtil.doGetNullDate(context, makeLearnUrl(CmdConstants.JPWEB), new NetCallBack<JpWebWholeModel>() {
+        NetWorkUtil.doGetNullData(context, makeLearnUrl(CmdConstants.JPWEB), new NetCallBack<JpWebWholeModel>() {
 
             @Override
             public void onSuccess(JpWebWholeModel bean) {

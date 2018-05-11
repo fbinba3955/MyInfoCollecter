@@ -76,9 +76,10 @@ public class ContentWebView extends MainActivity implements AdvancedWebView.List
         webView.getSettings().setSavePassword(false);
         webView.getSettings().setSaveFormData(false);
         webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setSupportZoom(true);//支持缩放
         webView.setHorizontalScrollBarEnabled(false);// 水平不显示
         webView.setVerticalScrollBarEnabled(false); // 垂直不显示
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.getSettings().setLoadWithOverviewMode(true);
         // webview漏洞,android3.0~android4.2移除searchBoxJavaBridge
         if (Build.VERSION.SDK_INT > 10 && Build.VERSION.SDK_INT <= 17) {

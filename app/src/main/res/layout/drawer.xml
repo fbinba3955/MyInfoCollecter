@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:background="@android:color/white"
+    android:padding="12dp"
     android:orientation="vertical"
      >
 
@@ -31,6 +32,28 @@
             android:layout_weight="1"
             android:paddingLeft="@dimen/default_padding"
             android:text="登录"
-            android:textSize="@dimen/new_text_size_basic" />
+            android:textSize="@dimen/new_text_size_medium" />
+
+        <TextView
+            android:id="@+id/tv_level_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/new_text_size_small" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"></LinearLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:visibility="gone" />
 </LinearLayout>

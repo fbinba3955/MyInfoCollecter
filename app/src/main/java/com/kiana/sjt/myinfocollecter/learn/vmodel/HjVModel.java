@@ -38,7 +38,7 @@ public class HjVModel extends MainVModel {
      * 请求数据
      */
     public void requestData() {
-        NetWorkUtil.doGetNullDate(context, makeLearnUrl(CmdConstants.HJJP),
+        NetWorkUtil.doGetNullData(context, makeLearnUrl(CmdConstants.HJJP),
                 new NetCallBack<HjJpModel>() {
 
                     @Override

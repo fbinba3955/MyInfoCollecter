@@ -11,6 +11,8 @@ import com.kiana.sjt.myinfocollecter.my.view.MyHomeActivity;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
 
+import java.util.HashMap;
+
 /**
  * Created by taodi on 2018/5/4.
  */
@@ -33,7 +35,10 @@ public class MyHomeVModel extends MainVModel {
     }
 
     public void requestData() {
-        NetWorkUtil.doGetNullDate(context, makeMyUrl(CmdConstants.MY), new NetCallBack<JpWebWholeModel>() {
+        NetWorkUtil.doPostData(context,
+                makeMyUrl(CmdConstants.MY),
+                new HashMap<String, String>(),
+                new NetCallBack<JpWebWholeModel>() {
 
             @Override
             public void onSuccess(JpWebWholeModel bean) {

@@ -1,5 +1,6 @@
 package com.kiana.sjt.myinfocollecter.home.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -9,6 +10,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
@@ -17,6 +22,9 @@ import com.kiana.sjt.myinfocollecter.Constants;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.R;
 import com.kiana.sjt.myinfocollecter.RecyclerViewFragment;
+import com.kiana.sjt.myinfocollecter.utils.UserUtil;
+
+import org.w3c.dom.Text;
 
 public class HomeActivity extends MainActivity {
 
@@ -25,15 +33,37 @@ public class HomeActivity extends MainActivity {
 
     MaterialViewPager mViewPager;
 
+    private LinearLayout userLayout;
+
+    private TextView userNameTv;
+
+    private TextView levelNameTv;
+
+    private ImageView userHeadIv;
+
+    private Button logoutBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        userLayout = (LinearLayout) findViewById(R.id.layout_user);
+        userLayout.setOnClickListener(onClickListener);
+
+        userNameTv = (TextView) findViewById(R.id.tv_user_name);
+
+        levelNameTv = (TextView) findViewById(R.id.tv_level_name);
+
+        userHeadIv = (ImageView) findViewById(R.id.iv_user_head);
+
+        logoutBtn = (Button) findViewById(R.id.btn_logout);
+        logoutBtn.setOnClickListener(onClickListener);
+
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
 
         final Toolbar toolbar = mViewPager.getToolbar();
-        toolbar.setTitleTextColor(getColor(R.color.white));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
@@ -120,6 +150,22 @@ public class HomeActivity extends MainActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //刷新登录状态
+        if (UserUtil.isLogin()) {
+            userNameTv.setText(UserUtil.getUserInfo().getNickname());
+            levelNameTv.setText(UserUtil.getUserInfo().getLevelname());
+            logoutBtn.setVisibility(View.VISIBLE);
+        }
+        else {
+            userNameTv.setText(getResources().getString(R.string.login));
+            levelNameTv.setText("");
+            logoutBtn.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -135,6 +181,24 @@ public class HomeActivity extends MainActivity {
             actionBar.setHomeButtonEnabled(true);
         }
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.layout_user) {
+                //判断是否已经登录
+                if (!UserUtil.isLogin()) {
+                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+            else if (view.getId() == R.id.btn_logout) {
+                UserUtil.setLogout();
+                tip("已退出当前用户");
+                onResume();
+            }
+        }
+    };
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

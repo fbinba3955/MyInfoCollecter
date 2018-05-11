@@ -31,7 +31,7 @@ public class NjszNewsVModel extends MainVModel{
 
     public void questData() {
         //发送数据请求
-        NetWorkUtil.doGetNullDate(activity, makeMedicineUrl(CmdConstants.NJSZRL),
+        NetWorkUtil.doGetNullData(activity, makeMedicineUrl(CmdConstants.NJSZRL),
                 new NetCallBack<NjszrlModel>() {
 
                     @Override

@@ -11,6 +11,8 @@ import java.io.Serializable;
 
 public class BaseResponseModel extends BaseObservable implements Serializable{
 
+    public static final String SUCCESS = "0";
+
     private String resultCode;
 
     private String resultMsg;

@@ -10,8 +10,11 @@ import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.home.model.LoginModel;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
+import com.kiana.sjt.myinfocollecter.utils.net.BaseResponseModel;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
+
+import java.util.HashMap;
 
 /**
  * Created by taodi on 2018/5/8.
@@ -30,18 +33,22 @@ public class LoginVModel extends MainVModel{
         }
     }
 
-    public void doRequestData() {
-        NetWorkUtil.doGetNullDate(mainActivity, makeUserUrl(CmdConstants.LOGIN), new NetCallBack<LoginModel>() {
+    public void doRequestData(String username, String password) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("password", password);
+        NetWorkUtil.doPostData(mainActivity, makeUserUrl(CmdConstants.LOGIN),params, new NetCallBack<LoginModel>() {
 
             @Override
             public void onSuccess(LoginModel bean) {
-                if (!"0".equals(bean.getResultCode())) {
+                if (!BaseResponseModel.SUCCESS.equals(bean.getResultCode())) {
                     commonActivityListener.onTip(bean.getResultMsg());
                 }
                 else {
                     //登录成功
                     String userInfo = JsonUtil.fromObjectToJsonString(bean.getUser());
                     SPUtils.getInstance().put("user", userInfo);
+                    commonActivityListener.onFinish();
                 }
             }
 

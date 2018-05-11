@@ -37,6 +37,7 @@ public class LoginActivity extends MainActivity{
         userNameEt = (EditText) findViewById(R.id.et_username);
         passWordEt = (EditText) findViewById(R.id.et_password);
         loginBtn = (Button) findViewById(R.id.btn_login);
+        loginBtn.setOnClickListener(onClickListener);
     }
 
     private void init() {
@@ -54,7 +55,10 @@ public class LoginActivity extends MainActivity{
                 String username = userNameEt.getText().toString();
                 String password = passWordEt.getText().toString();
                 if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-
+                    loginVModel.doRequestData(username, password);
+                }
+                else {
+                    tip(getString(R.string.login_fail_msg));
                 }
             }
         }
