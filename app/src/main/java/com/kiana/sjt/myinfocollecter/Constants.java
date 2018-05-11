@@ -33,6 +33,8 @@ public class Constants {
 
     public static final String MY = "my";
 
+    public static final String MUSIC = "music";
+
     public static final String IMAGES = "images";
 
     public static final String GET_IMAGE = "getimage";

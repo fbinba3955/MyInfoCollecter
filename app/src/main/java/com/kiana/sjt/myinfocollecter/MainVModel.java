@@ -75,4 +75,18 @@ public class MainVModel {
                 + cmd
                 + Constants.php;
     }
+
+    /**
+     * 音乐
+     * @param cmd
+     * @return
+     */
+    public String makeMusicUrl(String cmd) {
+        return Constants.serverUrl
+                + Constants.MUSIC
+                + Constants.divide
+                + cmd
+                + Constants.php;
+    }
+
 }
