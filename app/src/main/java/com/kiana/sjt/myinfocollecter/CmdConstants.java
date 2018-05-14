@@ -31,4 +31,6 @@ public class CmdConstants {
      * 自娱自乐网页整理
      */
     public static final String MY = "my";
+
+    public static final String SONGS = "songs";
 }

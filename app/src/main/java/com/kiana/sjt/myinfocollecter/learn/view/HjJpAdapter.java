@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.kiana.sjt.myinfocollecter.R;
 import com.kiana.sjt.myinfocollecter.learn.model.HjJpModel;
 import com.kiana.sjt.myinfocollecter.medicine.model.NjszrlModel;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.List;
 
@@ -65,4 +66,5 @@ public class HjJpAdapter extends RecyclerView.Adapter<HjHolder> {
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
     }
+
 }

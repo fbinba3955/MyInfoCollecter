@@ -78,8 +78,8 @@ public class HomeActivity extends MainActivity {
                     //    return RecyclerViewFragment.newInstance();
                     //case 1:
                     //    return RecyclerViewFragment.newInstance();
-                    //case 2:
-                    //    return WebViewFragment.newInstance();
+                    case 2:
+                        return SongsFragment.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
                 }
