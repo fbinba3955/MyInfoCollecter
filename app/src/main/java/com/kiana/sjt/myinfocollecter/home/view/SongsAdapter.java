@@ -26,6 +26,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder>{
 
     private Context context;
     private List<SongsModel.Datalist> datalists;
+    private OnPlayClickListener listener;
 
     public SongsAdapter(Context context, List<SongsModel.Datalist> datalists) {
         this.context = context;
@@ -40,10 +41,58 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        SongsModel.Datalist datalist = datalists.get(position);
-        holder.songNameTv.setText(datalist.getName());
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final SongsModel.Datalist datalist = datalists.get(position);
+        if (datalist.getName().split("-").length >= 2) {
+            holder.songNameTv.setText(datalist.getName().split("-")[1]);
+            holder.songSingerTv.setText(datalist.getName().split("-")[0]);
+            holder.songSingerTv.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.songNameTv.setText(datalist.getName());
+            holder.songSingerTv.setVisibility(View.GONE);
+        }
+
+        holder.playPauseIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!datalist.isPlaying()) {
+                    for (SongsModel.Datalist bean:datalists
+                         ) {
+                        bean.setPlaying(false);
+                    }
+                }
+                datalist.toggle();
+                notifyDataSetChanged();
+                listener.onPlayClick(position, datalist.isPlaying());
+            }
+        });
+        if (datalist.isPlaying()) {
+            holder.playPauseIv.setImageResource(R.drawable.ic_pause_black_24dp);
+        }
+        else {
+            holder.playPauseIv.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+        }
         ImageLoader.getInstance().displayImage(datalist.getCover(), holder.coverIv, getSongImageLoaderOption());
+    }
+
+    /**
+     * 切换音乐播放状态
+     * @param position
+     * @param isPlay
+     */
+    public void changePlayMusic(int position, boolean isPlay) {
+        if (isPlay) {
+            for (SongsModel.Datalist bean:datalists
+                    ) {
+                bean.setPlaying(false);
+            }
+            datalists.get(position).toggle();
+        }
+        else {
+            datalists.get(position).toggle();
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -54,12 +103,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView songNameTv;
+        private TextView songSingerTv;
         private ImageView coverIv;
         private ImageView playPauseIv;
 
         public ViewHolder(View itemView) {
             super(itemView);
             songNameTv = (TextView) itemView.findViewById(R.id.tv_song_name);
+            songSingerTv = (TextView) itemView.findViewById(R.id.tv_song_singer);
             coverIv = (ImageView) itemView.findViewById(R.id.iv_cover);
             playPauseIv = (ImageView) itemView.findViewById(R.id.iv_play_pause);
         }
@@ -75,5 +126,13 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder>{
                 .cacheInMemory(false)
                 .build();
         return options;
+    }
+
+    public void setOnPlayClickListener(OnPlayClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnPlayClickListener {
+        public void onPlayClick(int position, boolean isPlay);
     }
 }

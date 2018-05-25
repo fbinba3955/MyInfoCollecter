@@ -30,6 +30,11 @@ public class SongsModel extends BaseResponseModel implements Serializable{
 
         private String cover;
 
+        /**
+         * 播放状态
+         */
+        private boolean playing = false;
+
         public String getName() {
             return name;
         }
@@ -52,6 +57,18 @@ public class SongsModel extends BaseResponseModel implements Serializable{
 
         public void setCover(String cover) {
             this.cover = cover;
+        }
+
+        public boolean isPlaying() {
+            return playing;
+        }
+
+        public void setPlaying(boolean playing) {
+            this.playing = playing;
+        }
+
+        public void toggle() {
+            this.playing = !playing;
         }
     }
 }

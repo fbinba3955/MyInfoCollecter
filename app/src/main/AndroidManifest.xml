@@ -45,6 +45,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".home.view.LoginActivity"
             android:screenOrientation="portrait"></activity>
+
+        <service android:name=".utils.music.MusicService"></service>
     </application>
 
 </manifest>

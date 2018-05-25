@@ -1,5 +1,8 @@
 package com.kiana.sjt.myinfocollecter.home.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,11 +28,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_KEY;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_PAUSE;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_PLAY;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_POSITION;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_REPLAY;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_SONGS;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_UPDATE_SONGS;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE;
+
 /**
  * Created by taodi on 2018/5/12.
  */
 
-public class SongsFragment extends MainFragment{
+public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayClickListener{
 
     private Unbinder unbinder;
 
@@ -37,6 +49,13 @@ public class SongsFragment extends MainFragment{
     RecyclerView recyclerView;
 
     SongsAdapter adapter;
+
+    /**
+     * 当前播放位置
+     */
+    private int currentPosition = 0;
+
+    private SongsModel songsModel;
 
     public static SongsFragment newInstance() {
         return new SongsFragment();
@@ -72,7 +91,10 @@ public class SongsFragment extends MainFragment{
 
             @Override
             public void onSuccess(SongsModel bean) {
+                songsModel = bean;
+                sendMusicBroadcast(MUSIC_ACTIVITY_SERVICE_UPDATE_SONGS, 0, songsModel);
                 adapter = new SongsAdapter(getActivity(), bean.getDatalist());
+                adapter.setOnPlayClickListener(SongsFragment.this);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -81,5 +103,37 @@ public class SongsFragment extends MainFragment{
                 ((MainActivity)getActivity()).tip(error.getErrorDetail());
             }
         });
+    }
+
+    @Override
+    public void onPlayClick(int position, boolean isPlay) {
+        if (currentPosition == position) {
+            if (isPlay) {
+                sendMusicBroadcast(MUSIC_ACTIVITY_SERVICE_REPLAY, position, songsModel);
+            }else {
+                sendMusicBroadcast(MUSIC_ACTIVITY_SERVICE_PAUSE, position, songsModel);
+            }
+        }
+        else {
+            currentPosition = position;
+            sendMusicBroadcast(MUSIC_ACTIVITY_SERVICE_PLAY, position, songsModel);
+        }
+    }
+
+    private void sendMusicBroadcast(int musicType, int position, SongsModel songs) {
+        Intent intent = new Intent();
+        intent.setAction(MUSIC_SERVICE);
+        intent.putExtra(MUSIC_ACTIVITY_SERVICE_KEY, musicType);
+        intent.putExtra(MUSIC_ACTIVITY_SERVICE_POSITION, position);
+        intent.putExtra(MUSIC_ACTIVITY_SERVICE_SONGS, songs);
+        getActivity().sendBroadcast(intent);
+    }
+
+    public class MusicActvityBroadcastReciever extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
     }
 }

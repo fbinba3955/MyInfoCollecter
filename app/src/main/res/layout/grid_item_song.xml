@@ -12,8 +12,8 @@
         <ImageView
             android:id="@+id/iv_cover"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_default_song" />
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:id="@+id/layout_song_bar"
@@ -22,15 +22,37 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_song_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding"
-                android:text="songname"
-                android:lines="1"
                 android:layout_weight="1"
-                android:textSize="@dimen/new_text_size_basic" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_song_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="songname"
+                    android:textSize="@dimen/new_text_size_basic" />
+
+                <TextView
+                    android:id="@+id/tv_song_singer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:paddingBottom="6dp"
+                    android:text="TextView"
+                    android:textColor="@color/gray_light"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_play_pause"

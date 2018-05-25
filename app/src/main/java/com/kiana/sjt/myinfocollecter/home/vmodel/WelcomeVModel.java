@@ -16,6 +16,7 @@ import com.kiana.sjt.myinfocollecter.home.model.WelcomeBgModel;
 import com.kiana.sjt.myinfocollecter.home.view.HomeActivity;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
 import com.kiana.sjt.myinfocollecter.utils.UserUtil;
+import com.kiana.sjt.myinfocollecter.utils.music.MusicService;
 import com.kiana.sjt.myinfocollecter.utils.net.BaseResponseModel;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
@@ -45,6 +46,10 @@ public class WelcomeVModel extends MainVModel{
         if (UserUtil.isLogin()) {
             autoLogin();
         }
+
+        //启动音乐服务
+        Intent intent = new Intent(context, MusicService.class);
+        context.startService(intent);
     }
 
     //请求数据
