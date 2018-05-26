@@ -26,6 +26,8 @@ import com.kiana.sjt.myinfocollecter.utils.UserUtil;
 
 import org.w3c.dom.Text;
 
+import ezy.boost.update.UpdateManager;
+
 public class HomeActivity extends MainActivity {
 
     private DrawerLayout mDrawer;
@@ -180,6 +182,18 @@ public class HomeActivity extends MainActivity {
             actionBar.setDisplayUseLogoEnabled(false);
             actionBar.setHomeButtonEnabled(true);
         }
+
+        updateApp();
+    }
+
+    /**
+     * 获取更新状态
+     */
+    private void updateApp() {
+        UpdateManager.setDebuggable(true);
+        UpdateManager.setWifiOnly(false);
+        UpdateManager.setUrl(Constants.serverUrl+"update.php", "yyb");
+        UpdateManager.check(this);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
