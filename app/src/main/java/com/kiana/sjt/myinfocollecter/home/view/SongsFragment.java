@@ -36,6 +36,7 @@ import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_SONGS;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_UPDATE_SONGS;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE_TO_ACTIVITY_KEY;
 
 /**
  * Created by taodi on 2018/5/12.
@@ -120,6 +121,12 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
         }
     }
 
+    /**
+     * 发送广播给音乐服务
+     * @param musicType
+     * @param position
+     * @param songs
+     */
     private void sendMusicBroadcast(int musicType, int position, SongsModel songs) {
         Intent intent = new Intent();
         intent.setAction(MUSIC_SERVICE);
@@ -133,7 +140,7 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            int key = intent.getIntExtra(MUSIC_SERVICE_TO_ACTIVITY_KEY, 0);
         }
     }
 }

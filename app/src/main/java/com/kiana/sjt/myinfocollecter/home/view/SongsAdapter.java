@@ -57,13 +57,15 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 if (!datalist.isPlaying()) {
-                    for (SongsModel.Datalist bean:datalists
-                         ) {
-                        bean.setPlaying(false);
+                    for (int i=0;i<datalists.size();i++) {
+                        if (datalists.get(i).isPlaying()) {
+                            datalists.get(i).setPlaying(false);
+                            notifyItemChanged(i, "sss");
+                        }
                     }
                 }
                 datalist.toggle();
-                notifyDataSetChanged();
+                notifyItemChanged(position, "sss");
                 listener.onPlayClick(position, datalist.isPlaying());
             }
         });
@@ -123,7 +125,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder>{
                 .showImageOnFail(R.drawable.icon_default_song)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .cacheOnDisk(true)
-                .cacheInMemory(false)
+                .cacheInMemory(true)
                 .build();
         return options;
     }
