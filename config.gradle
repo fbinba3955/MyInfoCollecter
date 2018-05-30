@@ -6,8 +6,8 @@ ext {
                applicationId    : "com.kiana.sjt.myinfocollecter",
                minSdkVersion    : 19,
                targetSdkVersion : 26,
-               versionCode      : 7,
-               versionName      : "0.9.1",
+               versionCode      : 10,
+               versionName      : "1.0.0",
                channelName      : "default"]
 
     dependencies = [
