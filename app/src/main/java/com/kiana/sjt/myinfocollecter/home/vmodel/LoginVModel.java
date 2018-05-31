@@ -1,6 +1,7 @@
 package com.kiana.sjt.myinfocollecter.home.vmodel;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.androidnetworking.error.ANError;
 import com.blankj.utilcode.util.SPUtils;
@@ -9,6 +10,8 @@ import com.kiana.sjt.myinfocollecter.CommonActivityListener;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.home.model.LoginModel;
+import com.kiana.sjt.myinfocollecter.home.view.HomeActivity;
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
 import com.kiana.sjt.myinfocollecter.utils.net.BaseResponseModel;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
@@ -48,6 +51,9 @@ public class LoginVModel extends MainVModel{
                     //登录成功
                     String userInfo = JsonUtil.fromObjectToJsonString(bean.getUser());
                     SPUtils.getInstance().put("user", userInfo);
+                    //登录成功后启动，启动禅道服务
+                    Intent intent2 = new Intent(mainActivity, TTSZenTaoService.class);
+                    mainActivity.startService(intent2);
                     commonActivityListener.onFinish();
                 }
             }

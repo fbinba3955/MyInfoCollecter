@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kiana.sjt.myinfocollecter">
     //允许程序打开网络
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     //sd卡读写权限
@@ -48,6 +49,7 @@
             android:screenOrientation="portrait"></activity>
 
         <service android:name=".utils.music.MusicService"></service>
+        <service android:name=".tts.TTSZenTaoService"></service>
     </application>
 
 </manifest>

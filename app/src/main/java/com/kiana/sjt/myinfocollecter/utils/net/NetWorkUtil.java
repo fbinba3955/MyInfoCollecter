@@ -5,18 +5,18 @@ import android.content.Context;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.blankj.utilcode.util.LogUtils;
-import com.google.gson.Gson;
-import com.kiana.sjt.myinfocollecter.Constants;
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
-import com.kiana.sjt.myinfocollecter.utils.PropertiesUtil;
 import com.kiana.sjt.myinfocollecter.utils.UserUtil;
 
-import org.json.JSONArray;
-
 import java.util.HashMap;
+
+import okhttp3.OkHttpClient;
 
 /**
  * 网络工具
@@ -27,11 +27,24 @@ public class NetWorkUtil {
 
     public static final String TAG_NET = "Net";
 
+    public static ClearableCookieJar cookieJar = null;
+
+    public static OkHttpClient okHttpClient = null;
+
     /**
      * 普通的post请求
      */
     public static void doPostDefault() {
 
+    }
+
+    public static void initCookie(Context context) {
+        if (null == cookieJar) {
+            cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+            okHttpClient = new OkHttpClient.Builder()
+                    .cookieJar(cookieJar)
+                    .build();
+        }
     }
 
     /**
@@ -44,9 +57,11 @@ public class NetWorkUtil {
     public static <T> void doGetNullData(Context context,
                                          String url,
                                          final NetCallBack<T> netCallBack) {
+        initCookie(context);
         LogUtils.json(url);
         AndroidNetworking.get(url)
                 .setPriority(Priority.LOW)
+                .setOkHttpClient(okHttpClient)
                 .build()
                 .getAsString(new StringRequestListener() {
 
@@ -65,6 +80,28 @@ public class NetWorkUtil {
                 });
     }
 
+    public static void doGetNullDataForString(Context context,
+                                              String url,
+                                              final NetCallBackForString netCallBackForString) {
+        initCookie(context);
+        LogUtils.json(url);
+        AndroidNetworking.get(url)
+                .setPriority(Priority.LOW)
+                .setOkHttpClient(okHttpClient)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        netCallBackForString.onSuccess(response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        netCallBackForString.onError(anError);
+                    }
+                });
+    }
+
     /**
      * post请求 带参数
      * @param context
@@ -77,6 +114,7 @@ public class NetWorkUtil {
                                       final String url,
                                       HashMap<String, String> params,
                                       final NetCallBack<T> netCallBack) {
+        initCookie(context);
         //放入token
         if (UserUtil.isLogin()) {
             String token = UserUtil.getUserInfo().getToken();
@@ -88,6 +126,7 @@ public class NetWorkUtil {
                 .addBodyParameter(params)
                 .setTag("info")
                 .setPriority(Priority.MEDIUM)
+                .setOkHttpClient(okHttpClient)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override

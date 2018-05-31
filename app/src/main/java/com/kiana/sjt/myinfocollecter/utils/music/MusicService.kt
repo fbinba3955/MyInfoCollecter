@@ -1,6 +1,9 @@
 package com.kiana.sjt.myinfocollecter.utils.music
 
 import android.app.Service
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothHeadset
+import android.bluetooth.BluetoothProfile
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -100,6 +103,15 @@ open class MusicService : Service(),
         var intentFilter:IntentFilter = IntentFilter()
         intentFilter.addAction(MUSIC_SERVICE)
         registerReceiver(musicBroadcastReceiver, intentFilter)
+
+        var statusChangeListener = StatusChangeListener()
+        var statusChangeIntentFilter = IntentFilter()
+        statusChangeIntentFilter.addAction("android.intent.action.HEADSET_PLGU")
+        registerReceiver(statusChangeListener, statusChangeIntentFilter)
+
+        var statusChangeListener2 = StatusChangeListener()
+        var statusChangeFilter2 = IntentFilter(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
+        registerReceiver(statusChangeListener2, statusChangeFilter2)
     }
 
     //播放音乐
@@ -181,6 +193,13 @@ open class MusicService : Service(),
 
     }
 
+    /**
+     * 断开蓝牙或者拔掉耳机
+     */
+    private fun handleHeadsetDisconnected() {
+        pause()
+    }
+
     //接收音乐界面回送的广播
     inner class MusicBroadCast : BroadcastReceiver() {
 
@@ -218,5 +237,29 @@ open class MusicService : Service(),
                 }
             }
         }
+    }
+
+    /**
+     * 监听耳机拔出与蓝牙断开
+     */
+    inner class StatusChangeListener : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            var action = intent!!.action
+            if(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(action)) {
+                var adapter = BluetoothAdapter.getDefaultAdapter()
+                if (BluetoothProfile.STATE_DISCONNECTED == adapter.getProfileConnectionState(BluetoothProfile.HEADSET)) {
+                    handleHeadsetDisconnected()
+                }
+            }
+            else if ("android.intent.action.HEADSET_PLUG".equals(action)) {
+                if (intent.hasExtra("state")) {
+                    if (intent.getIntExtra("state", 0) == 0) {
+                        handleHeadsetDisconnected()
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -14,6 +14,7 @@ import com.kiana.sjt.myinfocollecter.databinding.ActivityWelcomeBinding;
 import com.kiana.sjt.myinfocollecter.home.model.LoginModel;
 import com.kiana.sjt.myinfocollecter.home.model.WelcomeBgModel;
 import com.kiana.sjt.myinfocollecter.home.view.HomeActivity;
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
 import com.kiana.sjt.myinfocollecter.utils.UserUtil;
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService;
