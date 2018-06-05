@@ -3,6 +3,7 @@ package com.kiana.sjt.myinfocollecter.home.view;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.CHANGE_PLAYMUSIC_POSITION;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_KEY;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_PAUSE;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_PLAY;
@@ -35,8 +37,11 @@ import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_REPLAY;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_SONGS;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_UPDATE_SONGS;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTVITY;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE_TO_ACTIVITY_CHANGE_PLAYMUSIC;
 import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE_TO_ACTIVITY_KEY;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.PAUSE_POSITION;
 
 /**
  * Created by taodi on 2018/5/12.
@@ -62,6 +67,8 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
         return new SongsFragment();
     }
 
+    MusicActvityBroadcastReciever reciever = new MusicActvityBroadcastReciever();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,14 +82,18 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setHasFixedSize(true);
-
         //Use this now
         recyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         requestSongsData();
+        //注册广播接收器
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MUSIC_ACTVITY);
+        getActivity().registerReceiver(reciever, filter);
     }
 
     @Override
     public void onDestroyView() {
+        getActivity().unregisterReceiver(reciever);
         super.onDestroyView();
         unbinder.unbind();
     }
@@ -141,6 +152,23 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
         @Override
         public void onReceive(Context context, Intent intent) {
             int key = intent.getIntExtra(MUSIC_SERVICE_TO_ACTIVITY_KEY, 0);
+            switch (key) {
+                //播放完毕一首歌曲，切换到下一首歌曲
+                case MUSIC_SERVICE_TO_ACTIVITY_CHANGE_PLAYMUSIC:
+                    int position = intent.getIntExtra(CHANGE_PLAYMUSIC_POSITION, -1);
+                    if (position>=0) {
+                        adapter.changePlayingMusic(position);
+                    }
+                    break;
+                //暂停一首当前播放的歌曲
+                case MUSIC_ACTIVITY_SERVICE_PAUSE:
+                    int position2 = intent.getIntExtra(PAUSE_POSITION, -1);
+                    if (position2>=0) {
+                        adapter.pauseMusic(position2);
+                    }
+                    break;
+                default:
+            }
         }
     }
 }

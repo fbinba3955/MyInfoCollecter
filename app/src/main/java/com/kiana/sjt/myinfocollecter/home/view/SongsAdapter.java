@@ -75,7 +75,33 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.ViewHolder>{
         else {
             holder.playPauseIv.setImageResource(R.drawable.ic_play_arrow_black_24dp);
         }
-        ImageLoader.getInstance().displayImage(datalist.getCover(), holder.coverIv, getSongImageLoaderOption());
+        try{
+            ImageLoader.getInstance().displayImage(datalist.getCover(), holder.coverIv, getSongImageLoaderOption());
+        }catch (Exception e){}
+
+    }
+
+    /**
+     * 切换当前正在播放的歌曲--仅显示效果
+     * @param positon
+     */
+    public void changePlayingMusic(int positon) {
+        for (int i=0;i<datalists.size();i++) {
+            if (datalists.get(i).isPlaying()) {
+                datalists.get(i).setPlaying(false);
+            }
+        }
+        datalists.get(positon).setPlaying(true);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 暂停播放的歌曲--仅显示效果
+     * @param position
+     */
+    public void pauseMusic(int position) {
+        datalists.get(position).setPlaying(false);
+        notifyItemChanged(position);
     }
 
     /**

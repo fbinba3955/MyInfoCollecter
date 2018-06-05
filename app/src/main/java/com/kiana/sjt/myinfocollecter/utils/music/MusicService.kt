@@ -12,6 +12,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.IBinder
 import com.kiana.sjt.myinfocollecter.music.model.SongsModel
+import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.CHANGE_PLAYMUSIC_POSITION
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_KEY
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_PAUSE
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_PLAY
@@ -19,7 +20,12 @@ import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVIT
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_REPLAY
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_SONGS
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTIVITY_SERVICE_UPDATE_SONGS
+import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTVITY
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE
+import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE_TO_ACTIVITY_CHANGE_PLAYMUSIC
+import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE_TO_ACTIVITY_KEY
+import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_SERVICE_TO_ACTIVITY_PAUSE
+import com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.PAUSE_POSITION
 import java.io.IOException
 
 /**
@@ -55,6 +61,10 @@ open class MusicService : Service(),
     //发送给Activity的intent
     private var mActivityIntent: Intent = Intent()
 
+    var musicBroadcastReceiver:MusicBroadCast = MusicBroadCast()
+    var statusChangeListener = StatusChangeListener()
+    var statusChangeListener2 = StatusChangeListener()
+
     object list {
         //服务到界面用
         @JvmField val MUSIC_ACTVITY = "service.to.activity"
@@ -62,7 +72,14 @@ open class MusicService : Service(),
         @JvmField val MUSIC_SERVICE_TO_ACTIVITY_MODEL = "model"
         @JvmField val MUSIC_SERVICE_TO_ACTIVITY_ISPLAY = "isplay"
         @JvmField val MUSIC_SERVICE_TO_ACTIVITY_NOWTIME = "nowtime"
-        @JvmField val MUSIC_SERVICE_TO_ACTIVITY_COMPLETE_CHANGE_MUSIC = 1001
+
+        //切换到下一首
+        @JvmField val MUSIC_SERVICE_TO_ACTIVITY_CHANGE_PLAYMUSIC = 1001
+        @JvmField val CHANGE_PLAYMUSIC_POSITION = "postion"
+
+        //暂停当前播放的歌曲
+        @JvmField val MUSIC_SERVICE_TO_ACTIVITY_PAUSE = 1002
+        @JvmField val PAUSE_POSITION = "postion"
 
         //界面到服务用
         @JvmField val MUSIC_SERVICE = "activity.to.service"
@@ -99,17 +116,17 @@ open class MusicService : Service(),
         mp.setOnErrorListener(this)
 
         //注册广播
-        var musicBroadcastReceiver:MusicBroadCast = MusicBroadCast()
+
         var intentFilter:IntentFilter = IntentFilter()
         intentFilter.addAction(MUSIC_SERVICE)
         registerReceiver(musicBroadcastReceiver, intentFilter)
 
-        var statusChangeListener = StatusChangeListener()
+
         var statusChangeIntentFilter = IntentFilter()
         statusChangeIntentFilter.addAction("android.intent.action.HEADSET_PLGU")
         registerReceiver(statusChangeListener, statusChangeIntentFilter)
 
-        var statusChangeListener2 = StatusChangeListener()
+
         var statusChangeFilter2 = IntentFilter(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
         registerReceiver(statusChangeListener2, statusChangeFilter2)
     }
@@ -167,6 +184,9 @@ open class MusicService : Service(),
             mp.stop()
             mp.release()
         }
+        unregisterReceiver(musicBroadcastReceiver)
+        unregisterReceiver(statusChangeListener)
+        unregisterReceiver(statusChangeListener2)
     }
 
     override fun onPrepared(p0: MediaPlayer?) {
@@ -180,10 +200,11 @@ open class MusicService : Service(),
             musicposition++
         }
         play(musics[musicposition].music)
+        sendBroadcastToActivity(MUSIC_SERVICE_TO_ACTIVITY_CHANGE_PLAYMUSIC, musicposition)
     }
 
     override fun onError(p0: MediaPlayer?, p1: Int, p2: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return true
     }
 
     /**
@@ -198,6 +219,24 @@ open class MusicService : Service(),
      */
     private fun handleHeadsetDisconnected() {
         pause()
+    }
+
+    private fun sendBroadcastToActivity(key:Int, position:Int) {
+
+        if (MUSIC_SERVICE_TO_ACTIVITY_CHANGE_PLAYMUSIC == key) {
+            var intent:Intent = Intent();
+            intent.action = MUSIC_ACTVITY
+            intent.putExtra(MUSIC_SERVICE_TO_ACTIVITY_KEY, key)
+            intent.putExtra(CHANGE_PLAYMUSIC_POSITION, position)
+            sendBroadcast(intent)
+        }
+        else if(MUSIC_SERVICE_TO_ACTIVITY_PAUSE == key) {
+            var intent:Intent = Intent();
+            intent.action = MUSIC_ACTVITY
+            intent.putExtra(MUSIC_SERVICE_TO_ACTIVITY_KEY, key)
+            intent.putExtra(PAUSE_POSITION, position)
+            sendBroadcast(intent)
+        }
     }
 
     //接收音乐界面回送的广播
