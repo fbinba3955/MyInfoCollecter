@@ -63,6 +63,7 @@ public class WelcomeAcivity extends MainActivity{
      */
     private void initConstants() {
         Constants.serverUrl = PropertiesUtil.getAppConfigValue(this, "serverUrl");
+        Constants.zentaoUrl = PropertiesUtil.getAppConfigValue(this, "zentaoUrl");
         Constants.serverImgUrl = Constants.serverUrl + "/images/";
     }
 }

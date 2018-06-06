@@ -15,6 +15,7 @@ import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
 import com.kiana.sjt.myinfocollecter.utils.UserUtil;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 
@@ -43,6 +44,9 @@ public class NetWorkUtil {
             cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
             okHttpClient = new OkHttpClient.Builder()
                     .cookieJar(cookieJar)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
                     .build();
         }
     }

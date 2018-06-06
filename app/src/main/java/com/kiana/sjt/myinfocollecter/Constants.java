@@ -11,6 +11,8 @@ public class Constants {
 
     public static String serverUrl = "";
 
+    public static String zentaoUrl = "";
+
     public static String serverImgUrl = "";
 
     public static String userName = "";

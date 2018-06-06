@@ -35,7 +35,7 @@ open class TTSZenTaoService : Service() {
         params.put("account", username)
         params.put("password", password)
         NetWorkUtil.doPostData(this,
-                "http://172.18.0.69/zentao/user-login.json",
+                Constants.zentaoUrl + "zentao/user-login.json",
                 params,
                 object : NetCallBack<ZenTaoLogin>() {
 
@@ -58,7 +58,7 @@ open class TTSZenTaoService : Service() {
      */
     open fun doGetZTMessionList(name:String) {
         NetWorkUtil.doGetNullDataForString(this,
-                "http://172.18.0.69/zentao/user-task-"+name+".html",
+                Constants.zentaoUrl + "zentao/user-task-"+name+".html",
                 object : NetCallBackForString(){
             override fun onSuccess(response: String?) {
                 if ("shijianting".equals(name)) {
