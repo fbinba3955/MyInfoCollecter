@@ -82,6 +82,9 @@ dependencies {
     }
 
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    implementation ('br.com.simplepass:loading-button-android:1.14.0') {
+        transitive = false
+    }
     implementation 'com.github.czy1121:update:1.1.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

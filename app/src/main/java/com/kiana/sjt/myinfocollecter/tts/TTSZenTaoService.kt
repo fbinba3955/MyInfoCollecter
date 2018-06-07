@@ -7,6 +7,14 @@ import android.text.TextUtils
 import com.androidnetworking.error.ANError
 import com.blankj.utilcode.util.LogUtils
 import com.kiana.sjt.myinfocollecter.Constants
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTANINTERERROR
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTANNETERROR
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTANSUCCESSMSG
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOACTION
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOERRORMSG
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOERRORTAG
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAORESULT
+import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOSUCCESSTAG
 import com.kiana.sjt.myinfocollecter.utils.net.BaseResponseModel
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBackForString
@@ -20,6 +28,18 @@ open class TTSZenTaoService : Service() {
     var hangweiqing = ""
     var yinjiachun = ""
     var qianglusheng = ""
+
+    object list {
+        @JvmField val ZENTAOACTION = "zt.service.to.activity"
+        @JvmField val ZENTAORESULT = "ztresult"
+        @JvmField val ZENTAOERRORMSG = "errormsg"
+        @JvmField val ZENTAOERRORTAG = "error"
+        @JvmField val ZENTAOSUCCESSTAG = "success"
+
+        @JvmField val ZENTANSUCCESSMSG = "禅道任务更新成功"
+        @JvmField val ZENTANNETERROR = "无法连接到禅道服务器"
+        @JvmField val ZENTANINTERERROR = "服务错误"
+    }
 
     override fun onBind(intent: Intent?): IBinder {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -47,7 +67,8 @@ open class TTSZenTaoService : Service() {
             }
 
             override fun onError(error: ANError?) {
-
+                LogUtils.json(error!!.errorDetail)
+                sendZenTaoResult(ZENTAOERRORTAG, ZENTANNETERROR)
             }
         })
 
@@ -88,6 +109,7 @@ open class TTSZenTaoService : Service() {
             }
 
             override fun onError(error: ANError?) {
+                sendZenTaoResult(ZENTAOERRORTAG, ZENTANNETERROR)
             }
 
         })
@@ -119,12 +141,27 @@ open class TTSZenTaoService : Service() {
         NetWorkUtil.doPostData(this, Constants.serverUrl+"tts/zentaomission.php", params,
                 object : NetCallBack<BaseResponseModel>(){
                     override fun onSuccess(bean: BaseResponseModel?) {
+                        if ("0".equals(bean!!.resultCode)) {
+                            sendZenTaoResult(ZENTAOSUCCESSTAG, ZENTANSUCCESSMSG)
+                        }
                     }
 
                     override fun onError(error: ANError?) {
                         LogUtils.json(error!!.errorDetail)
+                        sendZenTaoResult(ZENTAOERRORTAG, ZENTANINTERERROR)
                     }
 
                 })
+    }
+
+    /**
+     * 发送禅道结果
+     */
+    open fun sendZenTaoResult(tag:String, msg:String) {
+        var intent = Intent()
+        intent.action = ZENTAOACTION
+        intent.putExtra(ZENTAORESULT, tag)
+        intent.putExtra(ZENTAOERRORMSG, msg)
+        sendBroadcast(intent)
     }
 }

@@ -1,6 +1,9 @@
 package com.kiana.sjt.myinfocollecter.home.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -27,7 +30,15 @@ import com.kiana.sjt.myinfocollecter.utils.UserUtil;
 
 import org.w3c.dom.Text;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 import ezy.boost.update.UpdateManager;
+
+import static com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOACTION;
+import static com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOERRORMSG;
+import static com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOERRORTAG;
+import static com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAORESULT;
+import static com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOSUCCESSTAG;
+import static com.kiana.sjt.myinfocollecter.utils.music.MusicService.list.MUSIC_ACTVITY;
 
 public class HomeActivity extends MainActivity {
 
@@ -46,6 +57,10 @@ public class HomeActivity extends MainActivity {
 
     private Button logoutBtn;
 
+    private CircularProgressButton missionBtn;
+
+    private ZenTaoBroadCastReciever reciever = new ZenTaoBroadCastReciever();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +77,8 @@ public class HomeActivity extends MainActivity {
 
         logoutBtn = (Button) findViewById(R.id.btn_logout);
         logoutBtn.setOnClickListener(onClickListener);
+        missionBtn = (CircularProgressButton) findViewById(R.id.btn_get_missions);
+        missionBtn.setOnClickListener(onClickListener);
 
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
 
@@ -70,6 +87,11 @@ public class HomeActivity extends MainActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+
+        //注册广播接收器
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ZENTAOACTION);
+        registerReceiver(reciever, filter);
 
         mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
@@ -169,6 +191,13 @@ public class HomeActivity extends MainActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        unregisterReceiver(reciever);
+        super.onDestroy();
+        missionBtn.dispose();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -212,6 +241,12 @@ public class HomeActivity extends MainActivity {
                 tip("已退出当前用户");
                 onResume();
             }
+            else if (view.getId() == R.id.btn_get_missions) {
+                //登录成功后启动，启动禅道服务
+                Intent intent2 = new Intent(HomeActivity.this, TTSZenTaoService.class);
+                HomeActivity.this.startService(intent2);
+                missionBtn.startAnimation();
+            }
         }
     };
 
@@ -225,5 +260,23 @@ public class HomeActivity extends MainActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item) ||
                 super.onOptionsItemSelected(item);
+    }
+
+    public class ZenTaoBroadCastReciever extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ZENTAOACTION.equals(intent.getAction())) {
+                //成功
+                if (ZENTAOSUCCESSTAG.equals(intent.getStringExtra(ZENTAORESULT))) {
+                    tip(intent.getStringExtra(ZENTAOERRORMSG));
+                }
+                else if (ZENTAOERRORTAG.equals(intent.getStringExtra(ZENTAORESULT))) {
+                    tip(intent.getStringExtra(ZENTAOERRORMSG));
+                }
+                missionBtn.revertAnimation();
+            }
+        }
     }
 }

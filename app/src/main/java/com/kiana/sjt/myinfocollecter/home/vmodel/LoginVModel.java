@@ -51,9 +51,6 @@ public class LoginVModel extends MainVModel{
                     //登录成功
                     String userInfo = JsonUtil.fromObjectToJsonString(bean.getUser());
                     SPUtils.getInstance().put("user", userInfo);
-                    //登录成功后启动，启动禅道服务
-                    Intent intent2 = new Intent(mainActivity, TTSZenTaoService.class);
-                    mainActivity.startService(intent2);
                     commonActivityListener.onFinish();
                 }
             }
