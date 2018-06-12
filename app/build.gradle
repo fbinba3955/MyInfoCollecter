@@ -68,21 +68,18 @@ dependencies {
     implementation rootProject.ext.dependencies["androidUtils"]
     implementation rootProject.ext.dependencies["network"]
     implementation rootProject.ext.dependencies["pullrefresh"]
-
     implementation rootProject.ext.dependencies["AdvancedWebView"]
-
     implementation rootProject.ext.dependencies["materialDialog"]
     implementation rootProject.ext.dependencies["materialviewpager"]
     implementation rootProject.ext.dependencies["kenburnsview"]
     implementation rootProject.ext.dependencies["materialtabstrip"]
     implementation rootProject.ext.dependencies["glide"]
     implementation rootProject.ext.dependencies["pullloadmorerecyclerview"]
-    implementation (rootProject.ext.dependencies["multidex"]){
+    implementation(rootProject.ext.dependencies["multidex"]) {
         transitive = false
     }
-
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-    implementation ('br.com.simplepass:loading-button-android:1.14.0') {
+    implementation('br.com.simplepass:loading-button-android:1.14.0') {
         transitive = false
     }
     implementation 'com.github.czy1121:update:1.1.1'
@@ -91,6 +88,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation rootProject.ext.dependencies["arouter-api"]
     annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar')
 }
 repositories {
     mavenCentral()

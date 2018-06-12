@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     //sd卡读写权限
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -38,7 +39,8 @@
         <activity android:name=".medicine.view.NjszNewsActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".utils.webview.ContentWebView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity android:name=".learn.view.HjActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".learn.view.LearnHomeActivity"
@@ -50,6 +52,18 @@
 
         <service android:name=".utils.music.MusicService"></service>
         <service android:name=".tts.TTSZenTaoService"></service>
+
+        <activity
+            android:name="com.tencent.smtt.sdk.VideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true">
+            <intent-filter>
+                <action android:name="com.tencent.smtt.tbs.video.PLAY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

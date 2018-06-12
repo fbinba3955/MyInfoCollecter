@@ -8,11 +8,11 @@
 
     <include layout="@layout/layout_toolbar"></include>
 
-    <im.delight.android.webview.AdvancedWebView
+    <com.tencent.smtt.sdk.WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"></im.delight.android.webview.AdvancedWebView>
+        android:layout_weight="1"></com.tencent.smtt.sdk.WebView>
 
     <LinearLayout
         android:id="@+id/layout_btns"
