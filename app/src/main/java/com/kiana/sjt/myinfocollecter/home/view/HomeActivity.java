@@ -246,11 +246,17 @@ public class HomeActivity extends MainActivity {
         //设置自定义登录参数
         LoginModel.User user = UserUtil.getUserInfo();
         final ECInitParams params = ECInitParams.createParams();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            tip("没有READ_PHONE_STATE权限");
-            return;
+        if (null == user || null == user.getUsername()) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                tip("没有READ_PHONE_STATE权限");
+                return;
+            }
+            params.setUserid(PhoneUtils.getDeviceId());
+
         }
-        params.setUserid(PhoneUtils.getDeviceId());
+        else {
+            params.setUserid(user.getUsername());
+        }
         params.setAppKey("8a216da8646e949a016486c904930b8c");
         params.setToken("746713b1871f4b783c3888e14fa8942d");
         params.setAuthType(ECInitParams.LoginAuthType.NORMAL_AUTH);
@@ -315,7 +321,8 @@ public class HomeActivity extends MainActivity {
                 ECMessage.Type type = msg.getType();
                 if (type == ECMessage.Type.TXT) {
                     ECTextMessageBody textMessageBody = (ECTextMessageBody) msg.getBody();
-                    tip(textMessageBody.getMessage());
+                    String sender = msg.getForm();
+                    tip(sender+ "说：" +textMessageBody.getMessage());
                 }
                 else {
                     String thumbnailFileUrl = null;

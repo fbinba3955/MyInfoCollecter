@@ -144,12 +144,11 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
         }
     }
 
-    @SuppressLint("MissingPermission")
     private void sendIMMessage(String text) throws Exception{
         //创建一个待发送的消息ECmessage消息体
         ECMessage msg = ECMessage.createECMessage(ECMessage.Type.TXT);
         //设置消息接收者,如果是发送群组消息，则接收者设置群组ID
-        msg.setTo(PhoneUtils.getDeviceId());
+        msg.setTo("fbinba3955");
         //创建一个文本消息体，并添加到消息对象中
         ECTextMessageBody msgBody = new ECTextMessageBody(text.toString());
         //将消息体存放到ECMessage中

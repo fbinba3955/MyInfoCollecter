@@ -23,6 +23,8 @@ public class LoginModel extends BaseResponseModel implements Serializable{
 
         private String nickname;
 
+        private String username;
+
         public String getToken() {
             return token;
         }
@@ -53,6 +55,14 @@ public class LoginModel extends BaseResponseModel implements Serializable{
 
         public void setNickname(String nickname) {
             this.nickname = nickname;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
         }
     }
 
