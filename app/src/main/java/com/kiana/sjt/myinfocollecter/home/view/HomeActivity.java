@@ -101,8 +101,8 @@ public class HomeActivity extends MainActivity {
                     case 0:
                         return InfoCollecterFragment.newInstance();
                     //    return RecyclerViewFragment.newInstance();
-                    //case 1:
-                    //    return RecyclerViewFragment.newInstance();
+                    case 1:
+                        return OthersFragment.newInstance();
                     case 2:
                         return SongsFragment.newInstance();
                     default:

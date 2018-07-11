@@ -5,6 +5,8 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.os.Process;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
@@ -24,11 +26,17 @@ import static com.xiaomi.mipush.sdk.Constants.APP_ID;
  * Created by taodi on 2018/4/23.
  */
 
-public class MainApplication extends Application{
+public class MainApplication extends MultiDexApplication{
 
     public static final String APP_ID = "2882303761517812841";
     public static final String APP_KEY = "5201781289841";
     public static final String TAG = "com.kiana.sjt.myinfocollecter881023";
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {

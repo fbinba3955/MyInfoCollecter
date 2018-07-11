@@ -1,7 +1,9 @@
 package com.kiana.sjt.myinfocollecter.utils;
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.kiana.sjt.myinfocollecter.home.model.LoginModel;
 
@@ -43,6 +45,20 @@ public class UserUtil {
         }
         else {
             return null;
+        }
+    }
+
+    /**
+     * 返回app的用户名，登录下返回username，未登录下返回deviceId
+     * @return
+     */
+    @SuppressLint("MissingPermission")
+    public static String getAppUserName() {
+        if (null != UserUtil.getUserInfo()) {
+            return UserUtil.getUserInfo().getUsername();
+        }
+        else {
+            return PhoneUtils.getDeviceId();
         }
     }
 }

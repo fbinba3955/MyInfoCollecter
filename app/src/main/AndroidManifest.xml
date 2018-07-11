@@ -55,6 +55,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".home.view.LoginActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".others.view.WebSocketImActivity"
+            android:screenOrientation="portrait"></activity>
 
         <service android:name=".utils.music.MusicService"></service>
         <service android:name=".tts.TTSZenTaoService"></service>

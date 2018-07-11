@@ -75,6 +75,7 @@ dependencies {
     implementation rootProject.ext.dependencies["materialtabstrip"]
     implementation rootProject.ext.dependencies["glide"]
     implementation rootProject.ext.dependencies["pullloadmorerecyclerview"]
+    implementation rootProject.ext.dependencies["okhttp"]
     implementation(rootProject.ext.dependencies["multidex"]) {
         transitive = false
     }

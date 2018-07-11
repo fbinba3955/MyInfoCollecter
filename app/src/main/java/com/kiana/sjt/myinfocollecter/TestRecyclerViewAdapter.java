@@ -49,7 +49,7 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             }
             case TYPE_CELL: {
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.list_item_card_small, parent, false);
+                        .inflate(R.layout.list_item_others, parent, false);
                 return new RecyclerView.ViewHolder(view) {
                 };
             }
