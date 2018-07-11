@@ -1,5 +1,6 @@
 package com.kiana.sjt.myinfocollecter.home.view;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidnetworking.error.ANError;
+import com.blankj.utilcode.util.PhoneUtils;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.kiana.sjt.myinfocollecter.CmdConstants;
 import com.kiana.sjt.myinfocollecter.MainActivity;
@@ -24,6 +26,11 @@ import com.kiana.sjt.myinfocollecter.music.model.SongsModel;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+import com.yuntongxun.ecsdk.ECChatManager;
+import com.yuntongxun.ecsdk.ECDevice;
+import com.yuntongxun.ecsdk.ECError;
+import com.yuntongxun.ecsdk.ECMessage;
+import com.yuntongxun.ecsdk.im.ECTextMessageBody;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +66,7 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
     /**
      * 当前播放位置
      */
-    private int currentPosition = 0;
+    private int currentPosition = -1;
 
     private SongsModel songsModel;
 
@@ -129,7 +136,40 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
         else {
             currentPosition = position;
             sendMusicBroadcast(MUSIC_ACTIVITY_SERVICE_PLAY, position, songsModel);
+            try {
+                sendIMMessage(songsModel.getDatalist().get(position).getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void sendIMMessage(String text) throws Exception{
+        //创建一个待发送的消息ECmessage消息体
+        ECMessage msg = ECMessage.createECMessage(ECMessage.Type.TXT);
+        //设置消息接收者,如果是发送群组消息，则接收者设置群组ID
+        msg.setTo(PhoneUtils.getDeviceId());
+        //创建一个文本消息体，并添加到消息对象中
+        ECTextMessageBody msgBody = new ECTextMessageBody(text.toString());
+        //将消息体存放到ECMessage中
+        msg.setBody(msgBody);
+        //调用SDK发送接口发送消息到服务器
+        ECChatManager manager = ECDevice.getECChatManager();
+        manager.sendMessage(msg, new ECChatManager.OnSendMessageListener() {
+            @Override
+            public void onSendMessageComplete(ECError error, ECMessage message) {
+                // 处理消息发送结果
+                if(message == null) {
+                    return ;
+                }
+                // 将发送的消息更新到本地数据库并刷新UI
+            }
+            @Override
+            public void onProgress(String msgId, int totalByte, int progressByte) {
+                // 处理文件发送上传进度（尽上传文件、图片时候SDK回调该方法）
+            }
+        });
     }
 
     /**

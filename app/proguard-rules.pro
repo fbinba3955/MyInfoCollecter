@@ -22,3 +22,6 @@
 
 -keep class * extends android.webkit.WebChromeClient { *; }
 -dontwarn im.delight.android.webview.**
+
+# 注：v.x.x.x根据实际版本号修改，例如v5.0.0.1b
+-keep class com.yuntongxun.ecsdk.** {*; }

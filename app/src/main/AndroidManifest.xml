@@ -9,12 +9,22 @@
     //sd卡读写权限
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     // 获取手机信息权限
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+    //允许程序录制音频
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    //允许应用程序修改全局声音设置的权限
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
     //摄像头
     <uses-permission android:name="android.permission.CAMERA"/>
+
+    //允许使用PowerManager的WakeLocks在进程休眠时能够后台保持
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -120,6 +130,41 @@
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
         </receiver>
+
+
+        <service android:name="com.yuntongxun.ecsdk.ECClientService"></service>
+
+        <service android:name="com.yuntongxun.ecsdk.ECClientService$InnerService"
+            android:enabled="true" android:process=":push" />
+
+        <receiver android:name="com.yuntongxun.ecsdk.booter.CCPReceivers$AlarmReceiver" android:process=":push"/>
+        <receiver android:name="com.yuntongxun.ecsdk.booter.Alarm" android:exported="false" android:process=":push"/>
+
+        <receiver
+            android:name="com.yuntongxun.ecsdk.booter.CCPReceivers$ConnectionReceiver"
+            android:process=":push">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.yuntongxun.ecsdk.booter.CCPReceivers$BootReceiver"
+            android:process=":push">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!--<receiver-->
+            <!--android:name=".service.YuntxNotifyReceiver"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.kiana.sjt.myinfocollecter.action.VOIP_CALL" />-->
+                <!--<action android:name="com.kiana.sjt.myinfocollecter.action.MESSAGE" />-->
+                <!--<action android:name="com.kiana.sjt.myinfocollecter.action.NOTIFICATION_CLICK" />-->
+                <!--<action android:name="com.kiana.sjt.myinfocollecter.action.PERSON_VERSION" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>
