@@ -7,5 +7,5 @@ package com.kiana.sjt.myinfocollecter;
 public class ImageContants {
 
     //获取欢迎页图片的id
-    public static final String WELCOME_ID = "1001";
+    public static final String WELCOME_ID = "App.User.WelcomeBg";
 }

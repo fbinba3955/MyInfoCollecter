@@ -138,19 +138,19 @@ public class HomeActivity extends MainActivity {
                     case 0:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.colorPrimary,
-                                Constants.serverImgUrl + "img_head_nav1.jpg");
+                                Constants.serverFileUrl + "images/img_head_nav1.jpg");
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green_teal,
-                                Constants.serverImgUrl + "img_head_nav2.jpg");
+                                Constants.serverFileUrl + "images/img_head_nav2.jpg");
                     case 2:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,
-                                Constants.serverImgUrl + "img_head_nav3.jpg");
+                                Constants.serverFileUrl + "images/img_head_nav3.jpg");
                     case 3:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.red,
-                                Constants.serverImgUrl + "img_head_nav4.jpg");
+                                Constants.serverFileUrl + "images/img_head_nav4.jpg");
                 }
 
                 //execute others actions if needed (ex : modify your header logo)

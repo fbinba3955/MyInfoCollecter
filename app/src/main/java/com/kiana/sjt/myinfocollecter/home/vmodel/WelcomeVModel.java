@@ -18,6 +18,7 @@ import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
 import com.kiana.sjt.myinfocollecter.utils.UserUtil;
 import com.kiana.sjt.myinfocollecter.utils.music.MusicService;
+import com.kiana.sjt.myinfocollecter.utils.net.BaseNetStatusBean;
 import com.kiana.sjt.myinfocollecter.utils.net.BaseResponseModel;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
@@ -56,8 +57,8 @@ public class WelcomeVModel extends MainVModel{
     //请求数据
     private void questData(Context context) {
         //发送数据请求
-        NetWorkUtil.doGetNullData(context, makeImagesUrl(ImageContants.WELCOME_ID),
-                new NetCallBack<WelcomeBgModel>() {
+        NetWorkUtil.doGetData(context, ImageContants.WELCOME_ID,null,
+                new NetCallBack<BaseNetStatusBean<WelcomeBgModel>>() {
 
                     @Override
                     public void onError(ANError error) {
@@ -65,24 +66,29 @@ public class WelcomeVModel extends MainVModel{
                     }
 
                     @Override
-                    public void onSuccess(WelcomeBgModel bean) {
-                        initData(bean);
+                    public void onInterError(String errCode, String errMsg) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(BaseNetStatusBean<WelcomeBgModel> bean) {
+                        initData(bean.getData());
                     }
                 });
     }
 
     //发送自动登录请求，替换token
     private void autoLogin() {
-        NetWorkUtil.doPostData(context, makeUserUrl(CmdConstants.LOGIN),new HashMap<String, String>(), new NetCallBack<LoginModel>() {
+        NetWorkUtil.doPostData(context, CmdConstants.LOGIN,new HashMap<String, String>(), new NetCallBack<BaseNetStatusBean<LoginModel>>() {
 
             @Override
-            public void onSuccess(LoginModel bean) {
-                if (!BaseResponseModel.SUCCESS.equals(bean.getResultCode())) {
+            public void onSuccess(BaseNetStatusBean<LoginModel> bean) {
+                if (!BaseResponseModel.SUCCESS.equals(bean.getData().getResultCode())) {
                     UserUtil.setLogout();
                 }
                 else {
                     //登录成功
-                    String userInfo = JsonUtil.fromObjectToJsonString(bean.getUser());
+                    String userInfo = JsonUtil.fromObjectToJsonString(bean.getData().getUser());
                     SPUtils.getInstance().put("user", userInfo);
                 }
             }
@@ -90,6 +96,11 @@ public class WelcomeVModel extends MainVModel{
             @Override
             public void onError(ANError error) {
                 UserUtil.setLogout();
+            }
+
+            @Override
+            public void onInterError(String errCode, String errMsg) {
+
             }
         });
     }

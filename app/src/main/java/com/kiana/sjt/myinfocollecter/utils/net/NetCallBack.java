@@ -20,6 +20,8 @@ public abstract class NetCallBack<T> {
 
     public abstract void onError(ANError error);
 
+    public abstract void onInterError(String errCode,String errMsg);
+
     public NetCallBack() {
         mType = getSuperclassTypeParameter(getClass());
 

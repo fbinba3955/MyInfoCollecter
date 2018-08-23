@@ -21,6 +21,7 @@ import com.kiana.sjt.myinfocollecter.MainFragment;
 import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.R;
 import com.kiana.sjt.myinfocollecter.music.model.SongsModel;
+import com.kiana.sjt.myinfocollecter.utils.net.BaseNetStatusBean;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -99,13 +100,13 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
     }
 
     private void requestSongsData() {
-        NetWorkUtil.doGetNullData(getActivity(), new MainVModel().makeMusicUrl(CmdConstants.SONGS), new NetCallBack<SongsModel>() {
+        NetWorkUtil.doGetData(getActivity(), CmdConstants.SONGS, null, new NetCallBack<BaseNetStatusBean<SongsModel>>() {
 
             @Override
-            public void onSuccess(SongsModel bean) {
-                songsModel = bean;
+            public void onSuccess(BaseNetStatusBean<SongsModel> bean) {
+                songsModel = bean.getData();
                 sendMusicBroadcast(MUSIC_ACTIVITY_SERVICE_UPDATE_SONGS, 0, songsModel);
-                adapter = new SongsAdapter(getActivity(), bean.getDatalist());
+                adapter = new SongsAdapter(getActivity(), bean.getData().getDatalist());
                 adapter.setOnPlayClickListener(SongsFragment.this);
                 recyclerView.setAdapter(adapter);
             }
@@ -113,6 +114,11 @@ public class SongsFragment extends MainFragment implements SongsAdapter.OnPlayCl
             @Override
             public void onError(ANError error) {
                 ((MainActivity)getActivity()).tip(error.getErrorDetail());
+            }
+
+            @Override
+            public void onInterError(String errCode, String errMsg) {
+                ((MainActivity)getActivity()).tip(errMsg);
             }
         });
     }

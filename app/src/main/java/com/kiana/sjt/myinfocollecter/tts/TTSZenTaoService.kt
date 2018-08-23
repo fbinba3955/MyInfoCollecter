@@ -15,10 +15,7 @@ import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOERRORMSG
 import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOERRORTAG
 import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAORESULT
 import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService.list.ZENTAOSUCCESSTAG
-import com.kiana.sjt.myinfocollecter.utils.net.BaseResponseModel
-import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack
-import com.kiana.sjt.myinfocollecter.utils.net.NetCallBackForString
-import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil
+import com.kiana.sjt.myinfocollecter.utils.net.*
 
 open class TTSZenTaoService : Service() {
 
@@ -54,16 +51,21 @@ open class TTSZenTaoService : Service() {
         var params = HashMap<String, String>()
         params.put("account", username)
         params.put("password", password)
-        NetWorkUtil.doPostData(this,
+        NetWorkUtil.doGetData(this,
                 Constants.zentaoUrl + "zentao/user-login.json",
                 params,
-                object : NetCallBack<ZenTaoLogin>() {
+                object : NetCallBack<BaseNetStatusBean<ZenTaoLogin>>() {
 
-            override fun onSuccess(bean: ZenTaoLogin?) {
-                if ("success".equals(bean!!.status)) {
+            override fun onSuccess(bean: BaseNetStatusBean<ZenTaoLogin>?) {
+                if ("success".equals(bean!!.data.status)) {
                     //获取禅道任务内容
                     doGetZTMessionList("shijianting")
                 }
+            }
+
+            override fun onInterError(errCode: String?, errMsg: String?) {
+                LogUtils.json(errMsg)
+                sendZenTaoResult(ZENTAOERRORTAG, ZENTANNETERROR)
             }
 
             override fun onError(error: ANError?) {
@@ -139,9 +141,15 @@ open class TTSZenTaoService : Service() {
             params.put("qianglusheng", qianglusheng);
         }
         NetWorkUtil.doPostData(this, Constants.serverUrl+"tts/zentaomission.php", params,
-                object : NetCallBack<BaseResponseModel>(){
-                    override fun onSuccess(bean: BaseResponseModel?) {
-                        if ("0".equals(bean!!.resultCode)) {
+                object : NetCallBack<BaseNetStatusBean<BaseResponseModel>>(){
+
+                    override fun onInterError(errCode: String?, errMsg: String?) {
+                        LogUtils.json(errMsg)
+                        sendZenTaoResult(ZENTAOERRORTAG, ZENTANINTERERROR)
+                    }
+
+                    override fun onSuccess(bean: BaseNetStatusBean<BaseResponseModel>?) {
+                        if ("0".equals(bean!!.data.resultCode)) {
                             sendZenTaoResult(ZENTAOSUCCESSTAG, ZENTANSUCCESSMSG)
                         }
                     }

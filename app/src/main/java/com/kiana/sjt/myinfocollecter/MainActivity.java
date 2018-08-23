@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements CommonActivityLis
     public void setBackNav() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         if (null != toolbar) {
-            toolbar.setNavigationIcon(getDrawable(R.drawable.icon_back));
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.icon_back));
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements CommonActivityLis
     public void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         if (null != toolbar) {
-            toolbar.setTitleTextColor(getColor(R.color.white));
+            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
             setSupportActionBar(toolbar);
         }
     }

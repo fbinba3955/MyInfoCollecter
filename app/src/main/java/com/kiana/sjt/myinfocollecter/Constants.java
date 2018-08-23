@@ -15,6 +15,8 @@ public class Constants {
 
     public static String serverImgUrl = "";
 
+    public static String serverFileUrl = "http://881023.top/ttsphp/";
+
     public static String userName = "";
 
     public static String token = "";

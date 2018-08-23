@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'android-aspectjx'
 
 android {
     compileSdkVersion rootProject.ext.android.SdkVersion
@@ -91,6 +92,8 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar')
     implementation files('libs/MiPush_SDK_Client_3_6_2.jar')
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.tts.aopmonitor:AOPMonitor:1.2.0'
+
 }
 repositories {
     mavenCentral()

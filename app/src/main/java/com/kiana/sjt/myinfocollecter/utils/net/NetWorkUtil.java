@@ -11,10 +11,12 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.kiana.sjt.myinfocollecter.Constants;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
 import com.kiana.sjt.myinfocollecter.utils.UserUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -54,16 +56,18 @@ public class NetWorkUtil {
     /**
      * 普通的get请求
      * @param context
-     * @param url
+     * @param cmd
      * @param netCallBack
      * @param <T>
      */
     public static <T> void doGetNullData(Context context,
-                                         String url,
-                                         final NetCallBack<T> netCallBack) {
+                                         String cmd,
+                                         final NetCallBack<BaseNetStatusBean<T>> netCallBack) {
         initCookie(context);
-        LogUtils.json(url);
-        AndroidNetworking.get(url)
+        LogUtils.json(cmd);
+        HashMap<String, String> params = new HashMap<>(1);
+        params.put("service", cmd);
+        AndroidNetworking.get(Constants.serverUrl)
                 .setPriority(Priority.LOW)
                 .setOkHttpClient(okHttpClient)
                 .build()
@@ -72,7 +76,7 @@ public class NetWorkUtil {
                         @Override
                         public void onResponse(String response) {
                             LogUtils.json(TAG_NET, response);
-                            T respBean = JsonUtil.fromJsonStringToCollection(response, netCallBack.getType());
+                            BaseNetStatusBean<T> respBean = JsonUtil.fromJsonStringToCollection(response, netCallBack.getType());
                             netCallBack.onSuccess(respBean);
                         }
 
@@ -107,37 +111,38 @@ public class NetWorkUtil {
     }
 
     /**
-     * post请求 带参数
+     * 普通的get请求
      * @param context
-     * @param url 地址
-     * @param params 参数 不能为null
+     * @param cmd
+     * @param params
      * @param netCallBack
-     * @param <T>
      */
-    public static <T> void doPostData(Context context,
-                                      final String url,
-                                      HashMap<String, String> params,
-                                      final NetCallBack<T> netCallBack) {
-        initCookie(context);
-        //放入token
-        if (UserUtil.isLogin()) {
-            String token = UserUtil.getUserInfo().getToken();
-            params.put("token", token);
+    public static <T> void doGetData(Context context,
+                                 String cmd,
+                                 HashMap<String,String> params,
+                                 final NetCallBack<BaseNetStatusBean<T>> netCallBack) {
+        if (params == null) {
+            params = new HashMap<String, String>();
         }
-        LogUtils.json(url);
-        LogUtils.json(params.toString());
-        AndroidNetworking.post(url)
-                .addBodyParameter(params)
-                .setTag("info")
-                .setPriority(Priority.MEDIUM)
+        params.put("service", cmd);
+        initCookie(context);
+        LogUtils.json(cmd);
+        AndroidNetworking.get(Constants.serverUrl)
+                .setPriority(Priority.LOW)
                 .setOkHttpClient(okHttpClient)
+                .addQueryParameter(params)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
                         LogUtils.json(TAG_NET, response);
-                        T respBean = JsonUtil.fromJsonStringToCollection(response, netCallBack.getType());
-                        netCallBack.onSuccess(respBean);
+                        BaseNetStatusBean<T> respBean = JsonUtil.fromJsonStringToCollection(response, netCallBack.getType());
+                        if ("200".equals(respBean.getRet())) {
+                            netCallBack.onSuccess(respBean);
+                        }
+                        else {
+                            netCallBack.onInterError(respBean.getRet(), respBean.getMsg());
+                        }
                     }
 
                     @Override
@@ -145,5 +150,20 @@ public class NetWorkUtil {
                         netCallBack.onError(anError);
                     }
                 });
+    }
+
+    /**
+     * post请求 带参数， 取消post方法，引用get
+     * @param context
+     * @param cmd 功能命令
+     * @param params 参数 不能为null
+     * @param netCallBack
+     * @param <T>
+     */
+    public static <T> void doPostData(Context context,
+                                      final String cmd,
+                                      HashMap<String, String> params,
+                                      final NetCallBack<BaseNetStatusBean<T>> netCallBack) {
+        doGetData(context, cmd, params, netCallBack);
     }
 }

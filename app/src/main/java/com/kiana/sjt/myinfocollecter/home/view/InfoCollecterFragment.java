@@ -69,9 +69,9 @@ public class InfoCollecterFragment extends MainFragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MaterialViewPagerHelper.registerScrollView(getActivity(), scrollView);
-        ImageLoader.getInstance().displayImage(Constants.serverImgUrl + "img_medicine_enter.jpg", img_medicine, getImageLoaderOption());
-        ImageLoader.getInstance().displayImage(Constants.serverImgUrl + "img_learn_enter.jpg", img_learn, getImageLoaderOption());
-        ImageLoader.getInstance().displayImage(Constants.serverImgUrl + "img_my_enter.jpg", img_my, getImageLoaderOption());
+        ImageLoader.getInstance().displayImage(Constants.serverFileUrl + "images/img_medicine_enter.jpg", img_medicine, getImageLoaderOption());
+        ImageLoader.getInstance().displayImage(Constants.serverFileUrl + "images/img_learn_enter.jpg", img_learn, getImageLoaderOption());
+        ImageLoader.getInstance().displayImage(Constants.serverFileUrl + "images/img_my_enter.jpg", img_my, getImageLoaderOption());
     }
 
     View.OnClickListener onClickListener  = new View.OnClickListener() {

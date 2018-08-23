@@ -298,7 +298,11 @@ open class MusicService : Service(),
                     }
                 }
             }
+            test("shijianting", 1)
         }
 
     }
+
+    val test = {name:String, age:Int -> name + age + ""}
+
 }

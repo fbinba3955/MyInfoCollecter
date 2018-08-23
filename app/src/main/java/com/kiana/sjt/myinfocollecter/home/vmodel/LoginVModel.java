@@ -9,10 +9,13 @@ import com.kiana.sjt.myinfocollecter.CmdConstants;
 import com.kiana.sjt.myinfocollecter.CommonActivityListener;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.MainVModel;
+import com.kiana.sjt.myinfocollecter.home.model.LoginBean;
 import com.kiana.sjt.myinfocollecter.home.model.LoginModel;
 import com.kiana.sjt.myinfocollecter.home.view.HomeActivity;
 import com.kiana.sjt.myinfocollecter.tts.TTSZenTaoService;
 import com.kiana.sjt.myinfocollecter.utils.JsonUtil;
+import com.kiana.sjt.myinfocollecter.utils.net.BaseDataBean;
+import com.kiana.sjt.myinfocollecter.utils.net.BaseNetStatusBean;
 import com.kiana.sjt.myinfocollecter.utils.net.BaseResponseModel;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
@@ -40,24 +43,29 @@ public class LoginVModel extends MainVModel{
         HashMap<String, String> params = new HashMap<>();
         params.put("username", username);
         params.put("password", password);
-        NetWorkUtil.doPostData(mainActivity, makeUserUrl(CmdConstants.LOGIN),params, new NetCallBack<LoginModel>() {
+        NetWorkUtil.doGetData(mainActivity, CmdConstants.LOGIN, params, new NetCallBack<BaseNetStatusBean<LoginBean>>() {
 
             @Override
-            public void onSuccess(LoginModel bean) {
-                if (!BaseResponseModel.SUCCESS.equals(bean.getResultCode())) {
-                    commonActivityListener.onTip(bean.getResultMsg());
+            public void onSuccess(BaseNetStatusBean<LoginBean> bean) {
+                if (!BaseResponseModel.SUCCESS.equals(bean.getData().getResult())) {
+                    commonActivityListener.onTip(bean.getData().getReusltNote());
                 }
                 else {
-                    //登录成功
-                    String userInfo = JsonUtil.fromObjectToJsonString(bean.getUser());
+                    String userInfo = JsonUtil.fromObjectToJsonString(bean.getData());
                     SPUtils.getInstance().put("user", userInfo);
                     commonActivityListener.onFinish();
                 }
+
             }
 
             @Override
             public void onError(ANError error) {
                 commonActivityListener.onTip(error.getErrorDetail());
+            }
+
+            @Override
+            public void onInterError(String errCode, String errMsg) {
+                commonActivityListener.onTip(errMsg);
             }
         });
     }

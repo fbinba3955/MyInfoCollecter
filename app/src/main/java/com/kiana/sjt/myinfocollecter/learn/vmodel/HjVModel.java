@@ -9,6 +9,7 @@ import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.learn.model.HjJpModel;
 import com.kiana.sjt.myinfocollecter.learn.view.HjActivity;
+import com.kiana.sjt.myinfocollecter.utils.net.BaseNetStatusBean;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
 
@@ -38,17 +39,23 @@ public class HjVModel extends MainVModel {
      * 请求数据
      */
     public void requestData() {
-        NetWorkUtil.doGetNullData(context, makeLearnUrl(CmdConstants.HJJP),
-                new NetCallBack<HjJpModel>() {
+        NetWorkUtil.doGetData(context, CmdConstants.HJJP,
+                null,
+                new NetCallBack<BaseNetStatusBean<HjJpModel>>() {
 
                     @Override
-                    public void onSuccess(HjJpModel bean) {
-                        listener.onRefreshList(bean.getNewslist());
+                    public void onSuccess(BaseNetStatusBean<HjJpModel> bean) {
+                        listener.onRefreshList(bean.getData().getNewslist());
                     }
 
                     @Override
                     public void onError(ANError error) {
                         ((MainActivity)context).tip(error.getErrorDetail());
+                    }
+
+                    @Override
+                    public void onInterError(String errCode, String errMsg) {
+                        ((MainActivity)context).tip(errMsg);
                     }
                 });
     }

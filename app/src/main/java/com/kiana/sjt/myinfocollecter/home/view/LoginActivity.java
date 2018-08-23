@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.kiana.sjt.myinfocollecter.MainActivity;
 import com.kiana.sjt.myinfocollecter.R;
 import com.kiana.sjt.myinfocollecter.home.vmodel.LoginVModel;
+import com.tts.android.aopmonitor.annotation.BindMonitor;
 
 /**
  * 登录界面
@@ -49,6 +50,7 @@ public class LoginActivity extends MainActivity{
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @BindMonitor
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.btn_login) {

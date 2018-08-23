@@ -19,7 +19,7 @@ public class CmdConstants {
     /**
      * 登录
      */
-    public static final String LOGIN = "login";
+    public static final String LOGIN = "App.User.Login";
 
 
     /**
@@ -32,5 +32,5 @@ public class CmdConstants {
      */
     public static final String MY = "my";
 
-    public static final String SONGS = "songs";
+    public static final String SONGS = "App.Bussiness.Songs";
 }

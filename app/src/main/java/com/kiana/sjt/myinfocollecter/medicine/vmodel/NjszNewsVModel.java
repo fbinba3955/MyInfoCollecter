@@ -10,6 +10,7 @@ import com.kiana.sjt.myinfocollecter.MainVModel;
 import com.kiana.sjt.myinfocollecter.home.model.WelcomeBgModel;
 import com.kiana.sjt.myinfocollecter.medicine.model.NjszrlModel;
 import com.kiana.sjt.myinfocollecter.medicine.view.NjszNewsActivity;
+import com.kiana.sjt.myinfocollecter.utils.net.BaseNetStatusBean;
 import com.kiana.sjt.myinfocollecter.utils.net.NetCallBack;
 import com.kiana.sjt.myinfocollecter.utils.net.NetWorkUtil;
 
@@ -31,8 +32,9 @@ public class NjszNewsVModel extends MainVModel{
 
     public void questData() {
         //发送数据请求
-        NetWorkUtil.doGetNullData(activity, makeMedicineUrl(CmdConstants.NJSZRL),
-                new NetCallBack<NjszrlModel>() {
+        NetWorkUtil.doGetData(activity, CmdConstants.NJSZRL,
+                null,
+                new NetCallBack<BaseNetStatusBean<NjszrlModel>>() {
 
                     @Override
                     public void onError(ANError error) {
@@ -41,9 +43,14 @@ public class NjszNewsVModel extends MainVModel{
                     }
 
                     @Override
-                    public void onSuccess(NjszrlModel bean) {
+                    public void onInterError(String errCode, String errMsg) {
+                        activity.tip(errMsg);
+                    }
+
+                    @Override
+                    public void onSuccess(BaseNetStatusBean<NjszrlModel> bean) {
                         activity.hideLoadingDialog();
-                        initData(bean);
+                        initData(bean.getData());
                     }
                 });
     }
